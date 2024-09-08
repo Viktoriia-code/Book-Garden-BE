@@ -9,3 +9,6 @@
 This app was developed as part of "Web development" course at Metropolia UAS.
 
 📅 August - October, 2024
+
+## :computer: Technical stack overview
+- Node.js and Express
