@@ -4,6 +4,7 @@
   title: "The Great Gatsby",       // required field
   author: "F. Scott Fitzgerald",   // required field
   genre: "Fiction",                // required field
+  description: "Sample text",      // required field
   rating: 5,                       // optional field
   year: 2024,                      // required field
   publisher: "Charles Scribner's Sons",  // optional field
@@ -20,6 +21,7 @@ let bookArray = [
     title: "The Great Gatsby",
     author: "F. Scott Fitzgerald",
     genre: "Fiction",
+    description: "Set in the Jazz Age of 1920s America, The Great Gatsby follows the mysterious and wealthy Jay Gatsby and his unrelenting love for Daisy Buchanan. Narrated by Nick Carraway, the novel delves into themes of ambition, class, love, and the American Dream, amidst a world of wealth, excess, and moral decay.",
     rating: 5,
     year: 2024,
     publisher: "Charles Scribner's Sons",
@@ -33,6 +35,7 @@ let bookArray = [
     title: "Anna Karenina",
     author: "Leo Tolstoy",
     genre: "Classic",
+    description: "A powerful exploration of love, betrayal, and society, Anna Karenina tells the tragic story of a married woman who enters a passionate affair with the dashing Count Vronsky. Set against the backdrop of Russian aristocracy, the novel contrasts the emotional turmoil of Anna's love with broader social issues, including family, faith, and morality.",
     rating: 5,
     year: 2024,
     publisher: "Example Publisher",
@@ -51,8 +54,8 @@ function getAll() {
 
 function addOne(bookData) {
   // Check if any parameter is empty or undefined
-  const { title, author, genre, year, language } = bookData;
-  if (!title || !author || !genre || !year || !language ) {
+  const { title, author, genre, description, year, language } = bookData;
+  if (!title || !author || !genre || !description || !year || !language ) {
     return false;
   }
 
@@ -61,6 +64,7 @@ function addOne(bookData) {
     title,
     author,
     genre,
+    description,
     year,
     language,
     rating: 0,
@@ -106,6 +110,7 @@ if (require.main === module) {
     title: "Test book",
     author: "Test author",
     genre: "Test genre",
+    description: "Test desc",
     year: 2021,
     language: "English"
   });
@@ -117,6 +122,7 @@ if (require.main === module) {
     title: "Test book 2",
     author: "Test author 2",
     genre: "Test genre 2",
+    description: "Test desc 2",
     year: 2022,
     language: "Spanish"
   });

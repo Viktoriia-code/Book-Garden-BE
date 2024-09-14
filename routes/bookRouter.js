@@ -8,26 +8,23 @@ const {
   deleteBook,
 } = require('../controllers/bookControllers');
 
-const {
+/*const {
   middleware3,
   middleware4,
   middleware5,
   middlewareNoNext,
-} = require('../middleware/customMiddlewares');
+} = require('../middleware/customMiddlewares');  middleware instance */ 
 
-router.use(middleware3);
+//router.use(middleware3);
 
 // GET /books
 router.get('/', getAllBooks);
-
-
-router.use(middleware4);
 
 // POST /books
 router.post('/', createBook);
 
 // GET /books/:bookId
-router.get('/:bookId', middleware5, getBookById);
+router.get('/:bookId', getBookById);
 
 // PUT /books/:bookId
 router.put('/:bookId', updateBook);
