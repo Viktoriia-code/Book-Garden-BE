@@ -1,59 +1,87 @@
 const Book = require("../models/bookModel");
+const mongoose = require("mongoose");
 
 // GET /books
-const getAllBooks = (req, res) => {
-  const books = Book.getAll();
-  res.json(books);
+const getAllBooks = async (req, res) => {
+  try {
+    const books = await Book.find({}).sort({ createdAt: -1 });
+    res.status(200).json(books);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to retrieve books" });
+  }
 };
 
 // POST /books
-const createBook = (req, res) => {
-  console.log("body",req.body);
-  
-  const newBook = Book.addOne({ ...req.body }); // Spread the req.body object
-
-  if (newBook) {
-    res.json(newBook);
-  } else {
-    // Handle error (e.g., failed to create book)
-    res.status(500).json({ message: "Failed to create book" });
+const createBook = async (req, res) => {
+  try {
+    const newBook = await Book.create({ ...req.body });
+    res.status(201).json(newBook);
+  } catch (error) {
+    res.status(400).json({ message: "Failed to create book", error: error.message });
   }
 };
 
 // GET /books/:bookId
-const getBookById = (req, res) => {
-  const bookId = req.params.bookId;
-  const book = Book.findById(bookId);
-  if (book) {
-    res.json(book);
-  } else {
-    res.status(404).json({ message: "Book not found" });
+const getBookById = async (req, res) => {
+  const { bookId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(bookId)) {
+    return res.status(400).json({ message: "Invalid book ID" });
+  }
+
+  try {
+    const book = await Book.findById(bookId);
+    if (book) {
+      res.status(200).json(book);
+    } else {
+      res.status(404).json({ message: "Book not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Failed to retrieve user" });
   }
 };
 
 // PUT /books/:bookId
-const updateBook = (req, res) => {
-  const bookId = req.params.bookId;
-  const updatedBook = Book.updateOneById(bookId, { ...req.body }); // Spread the req.body object
+const updateBook = async (req, res) => {
+  const { bookId } = req.params;
 
-  if (updatedBook) {
-    res.json(updatedBook);
-  } else {
-    // Handle update failure (e.g., book not found)
-    res.status(404).json({ message: "Book not found" });
+  if (!mongoose.Types.ObjectId.isValid(bookId)) {
+    return res.status(400).json({ message: "Invalid book ID" });
+  }
+
+  try {
+    const updatedBook = await Book.findOneAndUpdate(
+      { _id: bookId },
+      { $set: req.body },
+      { new: true, runValidators: true }
+    );
+    if (updatedBook) {
+      res.status(200).json(updatedBook);
+    } else {
+      res.status(404).json({ message: "Book not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update book" });
   }
 };
 
 // DELETE /books/:bookId
-const deleteBook = (req, res) => {
-  const bookId = req.params.bookId;
-  const isDeleted = Book.deleteOneById(bookId);
+const deleteBook = async (req, res) => {
+  const { bookId } = req.params;
 
-  if (isDeleted) {
-    res.json({ message: "Book deleted successfully" });
-  } else {
-    // Handle deletion failure (e.g., book not found)
-    res.status(404).json({ message: "Book not found" });
+  if (!mongoose.Types.ObjectId.isValid(bookId)) {
+    return res.status(400).json({ message: "Invalid book ID" });
+  }
+
+  try {
+    const deletedBook = await Book.findOneAndDelete({ _id: bookId });
+    if (deletedBook) {
+      res.status(200).json({ message: "Book deleted successfully" });
+    } else {
+      res.status(404).json({ message: "Book not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete book" });
   }
 };
 
