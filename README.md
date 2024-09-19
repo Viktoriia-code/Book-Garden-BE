@@ -13,3 +13,21 @@ This app was developed as part of "Web development" course at Metropolia UAS.
 ## :computer: Technical stack overview
 - Node.js and Express
 - MongoDB and mongoose
+
+## 🔧 How to run locally:
+
+1) Clone the repository:
+```
+git clone https://github.com/Viktoriia-code/Book-Garden-BE.git
+```
+
+2) Move to the folder and install modules:
+```
+cd ./Book-Garden-BE
+npm install
+```
+
+3) Run the application:
+```
+npm run dev
+```
