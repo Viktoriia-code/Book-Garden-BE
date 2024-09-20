@@ -16,6 +16,7 @@ This app was developed as part of "Web development" course at Metropolia UAS.
 - Cors middleware for cross-origin resource sharing
 - JWT for authenticating and authorizing users
 - colors module for styling console output
+- seeder.js for populating the database with initial data
 
 ## 🔧 How to run locally:
 
