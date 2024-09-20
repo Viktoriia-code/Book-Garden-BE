@@ -13,6 +13,7 @@ This app was developed as part of "Web development" course at Metropolia UAS.
 ## :computer: Technical stack overview
 - Node.js and Express
 - MongoDB and mongoose
+- CORS
 
 ## 🔧 How to run locally:
 
