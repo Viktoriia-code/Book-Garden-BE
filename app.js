@@ -1,5 +1,6 @@
 const connectDB = require("./config/db");
 const express = require('express');
+const cors = require('cors');
 const bookRouter = require('./routes/bookRouter');
 const userRouter = require('./routes/userRouter');
 const reviewRouter = require('./routes/reviewRouter');
@@ -12,7 +13,11 @@ const app = express();
 
 connectDB();
 
+// middleware for cross-origin resource sharing
+app.use(cors());
+
 // middleware to parse JSON
+
 app.use(express.json());
 
 // middleware to log requests
