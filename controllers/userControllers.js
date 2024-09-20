@@ -1,6 +1,13 @@
 const User = require("../models/userModel");
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
+
+const SECRET="secretword";
+const saltRounds = 10;
+const createToken = (_id) => {
+  return jwt.sign({ _id }, SECRET, { expiresIn: '3d' });
+};
 
 // GET /users
 const getAllUsers = async (req, res) => {
@@ -12,47 +19,43 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-// POST /users/register
+// POST /users/signup
 const signupUser = async (req, res) => {
   const { email, password } = req.body;
 
-  try {
-    // Generate a salt (a random value added to the hash to increase security)
-    const salt = await bcrypt.genSalt(10); // 10 rounds of salt generation
-    // Hash the password with the salt
-    const hashedPassword = await bcrypt.hash(password, salt);
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  // Create a new user document and save it to the database
+  const newUser = new User({ email, password, hashedPassword });
+  await newUser.save();
 
-    // Create a new user with the hashed password
-    const newUser = new User({ email, password: hashedPassword });
-    await newUser.save();
+  // Create JWT token
+  const token = createToken(newUser._id);
 
-    res.status(201).json({ message: "User registered successfully" });
-  } catch (error) {
-    res.status(500).json({ error: "Server error" });
-  }
+  res.status(201).json({ message: "User registered successfully", token });
 };
 
 // POST users/login
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  try {
-    // Find the user by email
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
+  // Find the user by email
+  const user = await User.findOne({ email });
 
-    // Compare the input password with the stored hashed password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    res.status(200).json({ message: "Login successful" });
-  } catch (error) {
-    res.status(500).json({ error: "Server error" });
+  if (!user) {
+    return res.status(401).json({ message: "Authentication failed" });
   }
+
+  // Compare the provided password with the hashed password in the database
+  const passwordMatch = await bcrypt.compare(password, user.hashedPassword);
+
+  if (!passwordMatch) {
+    return res.status(401).json({ message: "Authentication failed" });
+  }
+
+  // Create JWT token
+  const token = createToken(user._id);
+
+  res.status(200).json({ message: "Authentication successful", token });
 };
 
 // GET /users/:userId

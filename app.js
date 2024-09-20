@@ -7,6 +7,7 @@ const reviewRouter = require('./routes/reviewRouter');
 const requestLogger = require("./middleware/requestLogger");
 const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
+const requireAuth = require("./requireAuth");
 
 // express app
 const app = express();
@@ -21,6 +22,13 @@ app.use(express.json());
 
 // middleware to log requests
 app.use(requestLogger);
+
+// Define the protected route
+app.get("/api/protectedroute", requireAuth, async (req, res) => {
+  // If the execution reaches here, it means the user is authenticated
+  // You can access the authenticated user's information from req.user
+  res.status(200).json({ message: "Protected route accessed successfully", user: req.user });
+});
 
 // Use the bookRouter for all /books routes
 app.use('/api/books', bookRouter);
