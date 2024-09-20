@@ -35,9 +35,9 @@ npm install
 npm run dev
 ```
 
-## :floppy_disk: Database Seeding Commands:
+## :chart_with_upwards_trend: Database Seeding Commands:
 
-:white_check_mark: To import data using seeder.js:
+:floppy_disk: To import data using seeder.js:
 ```
 npm run data:import
 ```
