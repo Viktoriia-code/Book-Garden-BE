@@ -4,7 +4,8 @@
   "lastName": "Seppänen",
   "password": "M@45mtg$",
   "username": "mattis",
-  "email": "matti.seppanen@gmail.com"
+  "email": "matti.seppanen@gmail.com",
+  "hashedPassword": "$2b$10$YUY71ppq9N2TmHRMas5Cq.yEZNFXzE1C0mofUmTBhu9h/T2fZBn4y",
 }
 */
 
