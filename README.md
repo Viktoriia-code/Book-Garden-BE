@@ -13,7 +13,8 @@ This app was developed as part of "Web development" course at Metropolia UAS.
 ## :computer: Technical stack overview
 - Node.js and Express
 - MongoDB and mongoose
-- Cors middleware
+- Cors middleware for cross-origin resource sharing
+- JWT for authenticating and authorizing users
 
 ## 🔧 How to run locally:
 
