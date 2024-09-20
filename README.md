@@ -11,15 +11,12 @@ This app was developed as part of "Web development" course at Metropolia UAS.
 📅 August - October, 2024
 
 ## :computer: Technical stack overview
-:small_orange_diamond: Node.js and Express
-
-:small_orange_diamond: Cors middleware for cross-origin resource sharing
-
-:small_orange_diamond: JWT for authenticating and authorizing users
-
-:small_orange_diamond: colors module for styling console output
-
-:small_orange_diamond: seeder.js for populating the database with initial data
+- Node.js and Express
+- MongoDB and mongoose
+- Cors middleware for cross-origin resource sharing
+- JWT for authenticating and authorizing users
+- colors module for styling console output
+- seeder.js for populating the database with initial data
 
 ## 🔧 How to run locally:
 
@@ -34,7 +31,12 @@ cd ./Book-Garden-BE
 npm install
 ```
 
-3) Run the application:
+3) Populate the database with initial data:
+```
+npm run data:import
+```
+
+4) Run the application:
 ```
 npm run dev
 ```
