@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const mongoose = require("mongoose");
+const bcrypt = require('bcrypt');
 
 // GET /users
 const getAllUsers = async (req, res) => {
@@ -11,13 +12,46 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-// POST /users
-const createUser = async (req, res) => {
+// POST /users/register
+const signupUser = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const newUser = await User.create({ ...req.body });
-    res.status(201).json(newUser);
+    // Generate a salt (a random value added to the hash to increase security)
+    const salt = await bcrypt.genSalt(10); // 10 rounds of salt generation
+    // Hash the password with the salt
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create a new user with the hashed password
+    const newUser = new User({ email, password: hashedPassword });
+    await newUser.save();
+
+    res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    res.status(400).json({ message: "Failed to create user", error: error.message });
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+// POST users/login
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Find the user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    // Compare the input password with the stored hashed password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    res.status(200).json({ message: "Login successful" });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -88,7 +122,8 @@ const deleteUser = async (req, res) => {
 module.exports = {
   getAllUsers,
   getUserById,
-  createUser,
+  signupUser,
+  loginUser,
   updateUser,
   deleteUser,
 };

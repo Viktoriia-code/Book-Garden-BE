@@ -17,7 +17,6 @@ connectDB();
 app.use(cors());
 
 // middleware to parse JSON
-
 app.use(express.json());
 
 // middleware to log requests
