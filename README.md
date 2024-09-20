@@ -15,6 +15,7 @@ This app was developed as part of "Web development" course at Metropolia UAS.
 - MongoDB and mongoose
 - Cors middleware for cross-origin resource sharing
 - JWT for authenticating and authorizing users
+- colors module for styling console output
 
 ## 🔧 How to run locally:
 
@@ -32,4 +33,16 @@ npm install
 3) Run the application:
 ```
 npm run dev
+```
+
+## :floppy_disk: Database Seeding Commands:
+
+:white_check_mark: To import data using seeder.js:
+```
+npm run data:import
+```
+
+🗑️ To destroy data using seeder.js:
+```
+npm run data:destroy
 ```
