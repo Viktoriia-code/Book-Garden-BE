@@ -12,6 +12,7 @@
   binding: "Hardback",             // optional field
   pages: 218,                      // optional field
   language: "English",             // required field
+  image: "/images/the-great-gatsby.jpg"  // optional field
 }
 */
 
@@ -32,6 +33,7 @@ const bookSchema = new Schema(
     binding: { type: String, required: false },
     pages: { type: Number, required: false },
     language: { type: String, required: true },
+    image: { type: String, required: false }
   },
   { timestamps: true }
 );

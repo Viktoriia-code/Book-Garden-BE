@@ -1,6 +1,7 @@
 const colors = require('colors');
 const users = require('./data/users.js');
 const books = require('./data/books.js');
+const reviews = require('./data/reviews.js');
 const User = require('./models/userModel.js');
 const Book = require('./models/bookModel.js');
 const Review = require('./models/reviewModel.js');
@@ -14,8 +15,18 @@ const importData = async () => {
     await Book.deleteMany();
     await Review.deleteMany();
 
-    await User.insertMany(users);
-    await Book.insertMany(books);
+    const createdUsers = await User.insertMany(users);
+    const createdBooks = await Book.insertMany(books);
+
+    const sampleReviews = reviews.map(review => {
+      return {
+        ...review,
+        userId: createdUsers[Math.floor(Math.random() * createdUsers.length)]._id,
+        bookId: createdBooks[Math.floor(Math.random() * createdBooks.length)]._id,
+      };
+    });
+
+    await Review.insertMany(sampleReviews);
 
     console.log('Data Imported!'.green.inverse);
     process.exit();

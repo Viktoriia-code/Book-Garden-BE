@@ -8,6 +8,7 @@ const books = [
     "ISBN": "123456789",
     "pages": 1225,
     "language": "Russian",
+    "image": "/images/war-and-peace.jpg"
   },
   {
     "title": "To Kill a Mockingbird",
@@ -17,7 +18,8 @@ const books = [
     "year": 1960,
     "ISBN": "1122334455",
     "pages": 281,
-    "language": "English"
+    "language": "English",
+    "image": "/images/to-kill-a-mockingbird.jpg"
   },
   {
     "title": "Pride and Prejudice",
@@ -27,7 +29,8 @@ const books = [
     "year": 1813,
     "ISBN": "9988776655",
     "pages": 432,
-    "language": "English"
+    "language": "English",
+    "image": "/images/pride-and-prejudice.jpg"
   },
   {
     "title": "Moby-Dick",
@@ -37,7 +40,8 @@ const books = [
     "year": 1851,
     "ISBN": "7766554433",
     "pages": 635,
-    "language": "English"
+    "language": "English",
+    "image": "/images/moby-dick.jpg"
   },
   {
     "title": "The Great Gatsby",
@@ -47,7 +51,8 @@ const books = [
     "year": 1925,
     "ISBN": "5544332211",
     "pages": 180,
-    "language": "English"
+    "language": "English",
+    "image": "/images/the-great-gatsby.jpg"
   },
   {
     "title": "The Catcher in the Rye",
@@ -57,7 +62,8 @@ const books = [
     "year": 1951,
     "ISBN": "3344556677",
     "pages": 214,
-    "language": "English"
+    "language": "English",
+    "image": "/images/the-catcher-in-the-rye.jpg"
   }
 ];
 

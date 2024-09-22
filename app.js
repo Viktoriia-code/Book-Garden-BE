@@ -20,6 +20,9 @@ app.use(cors());
 // middleware to parse JSON
 app.use(express.json());
 
+// Serve static files from the 'images' directory
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 // middleware to log requests
 app.use(requestLogger);
 
