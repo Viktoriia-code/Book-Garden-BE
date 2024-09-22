@@ -20,6 +20,13 @@ This app was developed as part of "Web development" course at Metropolia UAS.
 
 ## 🔧 How to run locally:
 
+### 📌 Prerequisites:
+Before you can run the application, ensure you have the following installed:
+- Git (for cloning the repository)
+- Node.js
+- MongoDB
+
+### 🏗️ Installation:
 1) Clone the repository:
 ```
 git clone https://github.com/Viktoriia-code/Book-Garden-BE.git
