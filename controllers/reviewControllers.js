@@ -41,7 +41,7 @@ const getReviewById = async (req, res) => {
   }
 };
 
-// PUT /reviews/:reviewId
+// PATCH /reviews/:reviewId
 const updateReview = async (req, res) => {
   const { reviewId } = req.params;
 

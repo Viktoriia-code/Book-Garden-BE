@@ -41,7 +41,7 @@ const getBookById = async (req, res) => {
   }
 };
 
-// PUT /books/:bookId
+// PATCH /books/:bookId
 const updateBook = async (req, res) => {
   const { bookId } = req.params;
 

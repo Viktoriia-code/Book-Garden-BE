@@ -15,8 +15,8 @@ const User = require('../models/userModel');
 // GET /users
 router.get('/', getAllUsers);
 
-// POST /users/signup
-router.post('/signup', signupUser);
+// POST /users/register
+router.post('/register', signupUser);
 
 // POST /users/login
 router.post('/login', loginUser);
@@ -24,8 +24,8 @@ router.post('/login', loginUser);
 // GET /users/:userId
 router.get('/:userId', getUserById);
 
-// PUT /users/:userId
-router.put('/:userId', updateUser);
+// PATCH /users/:userId
+router.patch('/:userId', updateUser);
 
 // DELETE /users/:userId
 router.delete('/:userId', deleteUser);

@@ -19,7 +19,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-// POST /users/signup
+// POST /users/register
 const signupUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -78,7 +78,7 @@ const getUserById = async (req, res) => {
   }
 };
 
-// PUT /users/:userId
+// PATCH /users/:userId
 const updateUser = async (req, res) => {
   const { userId } = req.params;
 

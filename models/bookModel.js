@@ -35,7 +35,7 @@ const bookSchema = new Schema(
     pages: { type: Number, required: false },
     language: { type: String, required: true },
     image: { type: String, required: false },
-    price: { type: Number, required: false }
+    price: { type: Number, required: true }
   },
   { timestamps: true }
 );

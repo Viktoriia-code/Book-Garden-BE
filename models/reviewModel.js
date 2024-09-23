@@ -25,8 +25,14 @@ const reviewSchema = new Schema(
       required: true,
       ref: 'Book', // Referencing the Book model
     },
-    comment: { type: String, required: true },
-    rating: { type: Number, required: true },
+    comment: {
+      type: String,
+      required: [true, "Please provide a comment."],
+    },
+    rating: {
+      type: Number,
+      required: [true, "Rating is required to evaluate the book."],
+    }
   },
   { timestamps: true }
 );

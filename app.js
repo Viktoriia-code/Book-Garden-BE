@@ -1,14 +1,16 @@
 const connectDB = require("./config/db");
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+// Routers:
 const bookRouter = require('./routes/bookRouter');
 const userRouter = require('./routes/userRouter');
 const reviewRouter = require('./routes/reviewRouter');
+// Middleware:
 const requestLogger = require("./middleware/requestLogger");
 const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
 const requireAuth = require("./requireAuth");
-const path = require('path');
 
 // express app
 const app = express();

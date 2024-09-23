@@ -17,8 +17,8 @@ router.post('/', createReview);
 // GET /reviews/:reviewId
 router.get('/:reviewId', getReviewById);
 
-// PUT /reviews/:reviewId
-router.put('/:reviewId', updateReview);
+// PATCH /reviews/:reviewId
+router.patch('/:reviewId', updateReview);
 
 // DELETE /reviews/:reviewId
 router.delete('/:reviewId', deleteReview);

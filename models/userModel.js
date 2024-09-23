@@ -18,9 +18,13 @@ const userSchema = new Schema(
     firstName: { type: String, required: false },
     lastName: { type: String, required: false },
     username: { type: String, required: false },
-    password: { type: String, required: true },
+    password: { type: String, required: [true, "Please provide a password."] },
     hashedPassword: String,
-    email: { type: String, required: true },
+    email: { 
+      type: String, 
+      required: [true, "Please provide an email."],
+      unique: true 
+    },
   },
   { timestamps: true }
 );

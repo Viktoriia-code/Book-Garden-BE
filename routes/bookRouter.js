@@ -8,15 +8,6 @@ const {
   deleteBook,
 } = require('../controllers/bookControllers');
 
-/*const {
-  middleware3,
-  middleware4,
-  middleware5,
-  middlewareNoNext,
-} = require('../middleware/customMiddlewares');  middleware instance */ 
-
-//router.use(middleware3);
-
 // GET /books
 router.get('/', getAllBooks);
 
@@ -26,8 +17,8 @@ router.post('/', createBook);
 // GET /books/:bookId
 router.get('/:bookId', getBookById);
 
-// PUT /books/:bookId
-router.put('/:bookId', updateBook);
+// PATCH /books/:bookId
+router.patch('/:bookId', updateBook);
 
 // DELETE /books/:bookId
 router.delete('/:bookId', deleteBook);
