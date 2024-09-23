@@ -8,7 +8,8 @@ const books = [
     "ISBN": "123456789",
     "pages": 1225,
     "language": "Russian",
-    "image": "/images/war-and-peace.jpg"
+    "image": "/images/war-and-peace.jpg",
+    "price": 30.50,
   },
   {
     "title": "To Kill a Mockingbird",
@@ -19,7 +20,8 @@ const books = [
     "ISBN": "1122334455",
     "pages": 281,
     "language": "English",
-    "image": "/images/to-kill-a-mockingbird.jpg"
+    "image": "/images/to-kill-a-mockingbird.jpg",
+    "price": 10,
   },
   {
     "title": "Pride and Prejudice",
@@ -30,7 +32,8 @@ const books = [
     "ISBN": "9988776655",
     "pages": 432,
     "language": "English",
-    "image": "/images/pride-and-prejudice.jpg"
+    "image": "/images/pride-and-prejudice.jpg",
+    "price": 8.50,
   },
   {
     "title": "Moby-Dick",
@@ -41,7 +44,8 @@ const books = [
     "ISBN": "7766554433",
     "pages": 635,
     "language": "English",
-    "image": "/images/moby-dick.jpg"
+    "image": "/images/moby-dick.jpg",
+    "price": 25,
   },
   {
     "title": "The Great Gatsby",
@@ -52,7 +56,8 @@ const books = [
     "ISBN": "5544332211",
     "pages": 180,
     "language": "English",
-    "image": "/images/the-great-gatsby.jpg"
+    "image": "/images/the-great-gatsby.jpg",
+    "price": 15.80,
   },
   {
     "title": "The Catcher in the Rye",
@@ -63,7 +68,188 @@ const books = [
     "ISBN": "3344556677",
     "pages": 214,
     "language": "English",
-    "image": "/images/the-catcher-in-the-rye.jpg"
+    "image": "/images/the-catcher-in-the-rye.jpg",
+    "price": 5.50,
+  },
+  {
+    "title": "1984",
+    "author": "George Orwell",
+    "genre": "Dystopian, Political Fiction",
+    "description": "Sample desc",
+    "year": 1949,
+    "ISBN": "9780451524935",
+    "pages": 328,
+    "language": "English",
+    "image": "/images/1984.jpg",
+    "price": 6.99
+  },
+  {
+    "title": "Brave New World",
+    "author": "Aldous Huxley",
+    "genre": "Dystopian, Science Fiction",
+    "description": "Sample desc",
+    "year": 1932,
+    "ISBN": "9780060850524",
+    "pages": 268,
+    "language": "English",
+    "image": "/images/brave-new-world.jpg",
+    "price": 8.50
+  },
+  {
+    "title": "Crime and Punishment",
+    "author": "Fyodor Dostoevsky",
+    "genre": "Philosophical Fiction, Psychological Fiction",
+    "description": "Sample desc",
+    "year": 1866,
+    "ISBN": "9780486415871",
+    "pages": 430,
+    "language": "English",
+    "image": "/images/crime-and-punishment.jpg",
+    "price": 7.49
+  },
+  {
+    "title": "The Odyssey",
+    "author": "Homer",
+    "genre": "Epic Poetry, Mythology",
+    "description": "Sample desc",
+    "year": -800,
+    "ISBN": "9780140268867",
+    "pages": 541,
+    "language": "English",
+    "image": "/images/the-odyssey.jpg",
+    "price": 8.99
+  },
+  {
+    "title": "Wuthering Heights",
+    "author": "Emily Brontë",
+    "genre": "Gothic Fiction, Tragedy",
+    "description": "Sample desc",
+    "year": 1847,
+    "ISBN": "9780141439556",
+    "pages": 416,
+    "language": "English",
+    "image": "/images/wuthering-heights.jpg",
+    "price": 5.99
+  },
+  {
+    "title": "Jane Eyre",
+    "author": "Charlotte Brontë",
+    "genre": "Gothic Fiction, Romance",
+    "description": "Sample desc",
+    "year": 1847,
+    "ISBN": "9780141441146",
+    "pages": 532,
+    "language": "English",
+    "image": "/images/jane-eyre.jpg",
+    "price": 6.99
+  },
+  {
+    "title": "The Catch-22",
+    "author": "Joseph Heller",
+    "genre": "Satire, War Fiction",
+    "description": "Sample desc",
+    "year": 1961,
+    "ISBN": "9781451626650",
+    "pages": 453,
+    "language": "English",
+    "image": "/images/catch-22.jpg",
+    "price": 8.99
+  },
+  {
+    "title": "Frankenstein",
+    "author": "Mary Shelley",
+    "genre": "Gothic Fiction, Science Fiction",
+    "description": "Sample desc",
+    "year": 1818,
+    "ISBN": "9780486282114",
+    "pages": 166,
+    "language": "English",
+    "image": "/images/frankenstein.jpeg",
+    "price": 4.50
+  },
+  {
+    "title": "The Hobbit",
+    "author": "J.R.R. Tolkien",
+    "genre": "Fantasy, Adventure",
+    "description": "Sample desc",
+    "year": 1937,
+    "ISBN": "9780547928227",
+    "pages": 310,
+    "language": "English",
+    "image": "/images/the-hobbit.jpg",
+    "price": 8.50
+  },
+  {
+    "title": "Fahrenheit 451",
+    "author": "Ray Bradbury",
+    "genre": "Dystopian, Science Fiction",
+    "description": "Sample desc",
+    "year": 1953,
+    "ISBN": "9781451673319",
+    "pages": 194,
+    "language": "English",
+    "image": "/images/fahrenheit-451.jpg",
+    "price": 7.49
+  },
+  {
+    "title": "The Picture of Dorian Gray",
+    "author": "Oscar Wilde",
+    "genre": "Philosophical Fiction, Gothic Fiction",
+    "description": "Sample desc",
+    "year": 1890,
+    "ISBN": "9780141439570",
+    "pages": 254,
+    "language": "English",
+    "image": "/images/the-picture-of-dorian-gray.jpg",
+    "price": 6.50
+  },
+  {
+    "title": "Dracula",
+    "author": "Bram Stoker",
+    "genre": "Gothic Fiction, Horror",
+    "description": "Sample desc",
+    "year": 1897,
+    "ISBN": "9780486411095",
+    "pages": 418,
+    "language": "English",
+    "image": "/images/dracula.jpeg",
+    "price": 5.99
+  },
+  {
+    "title": "The Brothers Karamazov",
+    "author": "Fyodor Dostoevsky",
+    "genre": "Philosophical Fiction, Tragedy",
+    "description": "Sample desc",
+    "year": 1880,
+    "ISBN": "9780374528379",
+    "pages": 796,
+    "language": "English",
+    "image": "/images/the-brothers-karamazov.jpg",
+    "price": 9.99
+  },
+  {
+    "title": "The Divine Comedy",
+    "author": "Dante Alighieri",
+    "genre": "Epic Poetry, Religious Allegory",
+    "description": "Sample desc",
+    "year": 1320,
+    "ISBN": "9780142437224",
+    "pages": 798,
+    "language": "English",
+    "image": "/images/the-divine-comedy.jpeg",
+    "price": 11.99
+  },
+  {
+    "title": "The Scarlet Letter",
+    "author": "Nathaniel Hawthorne",
+    "genre": "Historical Fiction, Romanticism",
+    "description": "Sample desc",
+    "year": 1850,
+    "ISBN": "9780142437262",
+    "pages": 272,
+    "language": "English",
+    "image": "/images/the-scarlet-letter.jpeg",
+    "price": 5.75
   }
 ];
 

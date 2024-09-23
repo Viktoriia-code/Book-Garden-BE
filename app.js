@@ -8,6 +8,7 @@ const requestLogger = require("./middleware/requestLogger");
 const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
 const requireAuth = require("./requireAuth");
+const path = require('path');
 
 // express app
 const app = express();
