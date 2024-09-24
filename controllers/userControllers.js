@@ -20,42 +20,35 @@ const getAllUsers = async (req, res) => {
 };
 
 // POST /users/register
-const signupUser = async (req, res) => {
+const registerUser = async (req, res) => {
   const { email, password } = req.body;
 
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-  // Create a new user document and save it to the database
-  const newUser = new User({ email, password, hashedPassword });
-  await newUser.save();
+  try {
+    const user = await User.register(email, password)
 
-  // Create JWT token
-  const token = createToken(newUser._id);
+    // create a token
+    const token = createToken(user._id)
 
-  res.status(201).json({ message: "User registered successfully", token });
+    res.status(200).json({email, token})
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
 };
 
 // POST users/login
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  // Find the user by email
-  const user = await User.findOne({ email });
+  try {
+    const user = await User.login(email, password);
 
-  if (!user) {
-    return res.status(401).json({ message: "Authentication failed" });
+    // create a token
+    const token = createToken(user._id);
+
+    res.status(200).json({email, token});
+  } catch (error) {
+    res.status(400).json({error: error.message})
   }
-
-  // Compare the provided password with the hashed password in the database
-  const passwordMatch = await bcrypt.compare(password, user.hashedPassword);
-
-  if (!passwordMatch) {
-    return res.status(401).json({ message: "Authentication failed" });
-  }
-
-  // Create JWT token
-  const token = createToken(user._id);
-
-  res.status(200).json({ message: "Authentication successful", token });
 };
 
 // GET /users/:userId
@@ -125,7 +118,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
   getAllUsers,
   getUserById,
-  signupUser,
+  registerUser,
   loginUser,
   updateUser,
   deleteUser,

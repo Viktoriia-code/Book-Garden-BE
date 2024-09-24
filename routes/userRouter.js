@@ -4,7 +4,7 @@ const router = express.Router();
 const {
   getAllUsers,
   getUserById,
-  signupUser,
+  registerUser,
   loginUser,
   updateUser,
   deleteUser,
@@ -16,7 +16,7 @@ const User = require('../models/userModel');
 router.get('/', getAllUsers);
 
 // POST /users/register
-router.post('/register', signupUser);
+router.post('/register', registerUser);
 
 // POST /users/login
 router.post('/login', loginUser);

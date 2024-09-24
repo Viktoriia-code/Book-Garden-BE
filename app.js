@@ -10,7 +10,7 @@ const reviewRouter = require('./routes/reviewRouter');
 const requestLogger = require("./middleware/requestLogger");
 const notFound = require("./middleware/notFound");
 const errorHandler = require("./middleware/errorHandler");
-const requireAuth = require("./requireAuth");
+const requireAuth = require("./middleware/requireAuth");
 
 // express app
 const app = express();
