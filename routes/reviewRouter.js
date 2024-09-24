@@ -7,20 +7,21 @@ const {
   updateReview,
   deleteReview,
 } = require('../controllers/reviewControllers');
+const requireAuth = require('../middleware/requireAuth');
 
 // GET /reviews
 router.get('/', getAllReviews);
 
 // POST /reviews
-router.post('/', createReview);
+router.post('/', requireAuth, createReview);
 
 // GET /reviews/:reviewId
-router.get('/:reviewId', getReviewById);
+router.get('/:reviewId', requireAuth, getReviewById);
 
 // PATCH /reviews/:reviewId
-router.patch('/:reviewId', updateReview);
+router.patch('/:reviewId', requireAuth, updateReview);
 
 // DELETE /reviews/:reviewId
-router.delete('/:reviewId', deleteReview);
+router.delete('/:reviewId', requireAuth, deleteReview);
 
 module.exports = router;

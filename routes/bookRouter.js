@@ -7,15 +7,20 @@ const {
   updateBook,
   deleteBook,
 } = require('../controllers/bookControllers');
+// const requireAuth = require('../middleware/requireAuth');
+// const requireAdmin = require('../middleware/requireAdmin');
 
 // GET /books
 router.get('/', getAllBooks);
 
-// POST /books
-router.post('/', createBook);
-
 // GET /books/:bookId
 router.get('/:bookId', getBookById);
+
+// require auth with admin account for the rest of operations (will be uncommented after development)
+// router.use(requireAuth, requireAdmin);
+
+// POST /books
+router.post('/', createBook);
 
 // PATCH /books/:bookId
 router.patch('/:bookId', updateBook);

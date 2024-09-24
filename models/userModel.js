@@ -20,13 +20,17 @@ const userSchema = new Schema(
     firstName: { type: String, required: false },
     lastName: { type: String, required: false },
     username: { type: String, required: false },
-    password: { type: String, required: [true, "Please provide a password."] },
-    hashedPassword: String,
+    hashedPassword: { type: String, required: true },
     email: { 
       type: String, 
       required: [true, "Please provide an email."],
       unique: true 
     },
+    isAdmin: { 
+      type: Boolean, 
+      required: false, 
+      default: false, 
+    }
   },
   { timestamps: true }
 );
@@ -71,7 +75,7 @@ userSchema.statics.login = async function(email, password) {
     throw Error('Incorrect email')
   };
 
-  const match = await bcrypt.compare(password, user.password)
+  const match = await bcrypt.compare(password, user.hashedPassword)
   if (!match) {
     throw Error('Incorrect password')
   };

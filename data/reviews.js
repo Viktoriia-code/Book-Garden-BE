@@ -39,6 +39,86 @@ const reviews = [
       rating: 2,
       comment: "Unfortunately, this book didn’t work for me. The writing style was difficult to get into, and I couldn’t connect with the characters. The plot was slow-moving and lacked the tension or drama I was hoping for. I found myself putting it down frequently, which is never a good sign. Not a book I would revisit.",
   },
+  {
+    rating: 1,
+    comment: "I didn't like this book at all. The story was boring, and I couldn't finish it. Not my cup of tea."
+  },
+  {
+    rating: 3,
+    comment: "This book was okay. It had some interesting parts, but overall, it felt too long. I wanted it to be more exciting."
+  },
+  {
+    rating: 4,
+    comment: "I enjoyed this book! The characters were nice, and the story kept me interested. I would recommend it."
+  },
+  {
+    rating: 2,
+    comment: "This book was not great. The writing was hard to follow, and I didn't really care about what happened."
+  },
+  {
+    rating: 5,
+    comment: "Loved this book! It made me laugh and cry. The author did a fantastic job with the story!"
+  },
+  {
+    rating: 3,
+    comment: "It was a decent read. Some parts were good, but I felt it dragged in places. I might read another by the same author."
+  },
+  {
+    rating: 1,
+    comment: "I really didn't like this book. It felt like nothing happened. I wouldn't suggest it to anyone."
+  },
+  {
+    rating: 4,
+    comment: "Good story and well-written. I liked the characters and would read more from this author."
+  },
+  {
+    rating: 2,
+    comment: "Not my favorite book. The plot was confusing, and I lost interest halfway through."
+  },
+  {
+    rating: 5,
+    comment: "This book was amazing! I couldn't put it down. Highly recommend for anyone who loves a good story!"
+  },
+  {
+    rating: 3,
+    comment: "It was alright. Some parts were fun, but others felt slow. I might read it again later."
+  },
+  {
+    rating: 2,
+    comment: "Disappointing book. I expected more action, but it was mostly just talking."
+  },
+  {
+    rating: 4,
+    comment: "A nice read! The plot was interesting, and the characters felt real. I enjoyed it."
+  },
+  {
+    rating: 1,
+    comment: "I couldn't get into this book. It was dull, and I didn't care about the ending."
+  },
+  {
+    rating: 5,
+    comment: "Absolutely loved it! The story was exciting and kept me on the edge of my seat. A must-read!"
+  },
+  {
+    rating: 3,
+    comment: "It was an okay book. Some good moments, but also some boring parts. Overall, just fine."
+  },
+  {
+    rating: 2,
+    comment: "Not a great experience. The book felt rushed, and I didn't like the characters."
+  },
+  {
+    rating: 4,
+    comment: "I liked this book. It was fun and engaging. I would read more by this author."
+  },
+  {
+    rating: 1,
+    comment: "I really didn't enjoy this book. It was hard to understand and not entertaining."
+  },
+  {
+    rating: 5,
+    comment: "One of the best books I've read! The writing was beautiful, and the story touched my heart."
+  }
 ];
 
 module.exports = reviews;
