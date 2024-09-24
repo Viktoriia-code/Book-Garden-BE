@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
   getAllUsers,
-  getUserById,
+  getUserProfile,
   registerUser,
   loginUser,
   updateUser,
@@ -22,8 +22,8 @@ router.post('/register', registerUser);
 // POST /users/login
 router.post('/login', loginUser);
 
-// GET /users/:userId
-router.get('/:userId', requireAuth, getUserById);
+// GET /users/profile
+router.get('/profile', requireAuth, getUserProfile);
 
 // PATCH /users/:userId
 router.patch('/:userId', requireAuth, updateUser);

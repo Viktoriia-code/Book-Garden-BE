@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const SECRET="secretword";
 const saltRounds = 10;
+
 const createToken = (_id) => {
   return jwt.sign({ _id }, SECRET, { expiresIn: '3d' });
 };
@@ -51,23 +52,14 @@ const loginUser = async (req, res) => {
   }
 };
 
-// GET /users/:userId
-const getUserById = async (req, res) => {
-  const { userId } = req.params;
-
-  if (!mongoose.Types.ObjectId.isValid(userId)) {
-    return res.status(400).json({ message: "Invalid user ID" });
-  }
-
-  try {
-    const user = await User.findById(userId);
-    if (user) {
-      res.status(200).json(user);
-    } else {
-      res.status(404).json({ message: "User not found" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Failed to retrieve user" });
+// GET /users/profile
+const getUserProfile = async (req, res) => {
+  const user = await User.findById(req.user._id);
+  
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404).json({ message: "User not found" });
   }
 };
 
@@ -117,7 +109,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   getAllUsers,
-  getUserById,
+  getUserProfile,
   registerUser,
   loginUser,
   updateUser,

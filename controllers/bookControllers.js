@@ -11,16 +11,6 @@ const getAllBooks = async (req, res) => {
   }
 };
 
-// POST /books
-const createBook = async (req, res) => {
-  try {
-    const newBook = await Book.create({ ...req.body });
-    res.status(201).json(newBook);
-  } catch (error) {
-    res.status(400).json({ message: "Failed to create book", error: error.message });
-  }
-};
-
 // GET /books/:bookId
 const getBookById = async (req, res) => {
   const { bookId } = req.params;
@@ -40,6 +30,31 @@ const getBookById = async (req, res) => {
     res.status(500).json({ message: "Failed to retrieve user" });
   }
 };
+
+// GET /books/new
+const getNewBooks = async (req, res) => {
+  const newBooks = await Book.find({}).sort({ createdAt: -1 }).limit(7);
+
+  res.json(newBooks);
+};
+
+// GET /books/topsellers
+const getTopBooks = async (req, res) => {
+  const topBooks = await Book.find({}).sort({ rating: -1 }).limit(7);
+
+  res.json(topBooks);
+};
+
+// POST /books
+const createBook = async (req, res) => {
+  try {
+    const newBook = await Book.create({ ...req.body });
+    res.status(201).json(newBook);
+  } catch (error) {
+    res.status(400).json({ message: "Failed to create book", error: error.message });
+  }
+};
+
 
 // PATCH /books/:bookId
 const updateBook = async (req, res) => {
@@ -88,6 +103,8 @@ const deleteBook = async (req, res) => {
 module.exports = {
   getAllBooks,
   getBookById,
+  getNewBooks,
+  getTopBooks,
   createBook,
   updateBook,
   deleteBook,
