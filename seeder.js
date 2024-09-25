@@ -21,8 +21,8 @@ const importData = async () => {
     const sampleReviews = reviews.map(review => {
       return {
         ...review,
-        user: createdUsers[Math.floor(Math.random() * createdUsers.length)].id,
-        book: createdBooks[Math.floor(Math.random() * createdBooks.length)].id,
+        user: createdUsers[Math.floor(Math.random() * createdUsers.length)]._id,
+        book: createdBooks[Math.floor(Math.random() * createdBooks.length)]._id,
       };
     });
 
