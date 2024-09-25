@@ -1,4 +1,5 @@
 const Book = require("../models/bookModel");
+const Review = require("../models/reviewModel");
 const mongoose = require("mongoose");
 
 // GET /books
@@ -100,6 +101,28 @@ const deleteBook = async (req, res) => {
   }
 };
 
+const getReviewsByBookId = async (req, res) => {
+  try {
+    const { bookId } = req.params; // Extract bookId from request parameters
+
+    // Fetch reviews for the book with the given bookId and populate user firstName and lastName
+    const reviews = await Review.find({ book: bookId })
+      .populate('user', 'firstName lastName') // Populate firstName and lastName from the User model
+      .exec();
+
+    // If no reviews are found, return a message
+    if (!reviews.length) {
+      return res.status(404).json({ message: "No reviews found for this book." });
+    }
+
+    // Return the reviews in the response
+    return res.status(200).json(reviews);
+  } catch (error) {
+    // Handle errors and return a 500 response
+    return res.status(500).json({ error: 'Failed to fetch reviews', details: error.message });
+  }
+}
+
 module.exports = {
   getAllBooks,
   getBookById,
@@ -108,4 +131,5 @@ module.exports = {
   createBook,
   updateBook,
   deleteBook,
+  getReviewsByBookId,
 };

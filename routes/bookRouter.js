@@ -8,6 +8,7 @@ const {
   createBook,
   updateBook,
   deleteBook,
+  getReviewsByBookId,
 } = require('../controllers/bookControllers');
 // const requireAuth = require('../middleware/requireAuth');
 // const requireAdmin = require('../middleware/requireAdmin');
@@ -20,6 +21,9 @@ router.get('/new', getNewBooks);
 
 // GET /books/topsellers
 router.get('/topsellers', getTopBooks);
+
+// GET /books/:bookId/reviews
+router.get('/:bookId/reviews', getReviewsByBookId);
 
 // GET /books/:bookId
 router.get('/:bookId', getBookById);

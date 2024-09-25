@@ -35,6 +35,15 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
+userSchema.set('toJSON', {
+  virtuals: true,
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
+
 // static register method
 userSchema.statics.register = async function(email, password) {
 
