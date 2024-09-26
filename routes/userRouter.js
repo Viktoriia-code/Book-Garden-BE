@@ -34,13 +34,13 @@ router.patch('/:userId', requireAuth, updateUser);
 // DELETE /users/:userId
 router.delete('/:userId', requireAuth, deleteUser);
 
-// GET /users/:userId/favorites
-router.get('/:userId/favorites', requireAuth, getUserFavorites);
+// GET /users/favorites/:userId
+router.get('/favorites/:userId', requireAuth, getUserFavorites);
 
-// POST /users/:userId/favorites
-router.post('/:userId/favorites', requireAuth, addFavoriteBook);
+// POST /users/favorites
+router.post('/favorites', requireAuth, addFavoriteBook);
 
-// DELETE /users/:userId/favorites
-router.delete('/:userId/favorites', requireAuth, removeFavoriteBook);
+// DELETE /users/favorites/:userId/:bookId
+router.delete('/favorites/:userId/:bookId', requireAuth, removeFavoriteBook);
 
 module.exports = router;

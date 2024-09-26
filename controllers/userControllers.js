@@ -119,14 +119,14 @@ const deleteUser = async (req, res) => {
   }
 };
 
-// GET /users/:userId/favorites
+// GET /users/favorites/:userId
 const getUserFavorites = async (req, res) => {
   try {
     const userId = req.params.userId;
 
     // Check if the userId in the params matches the authenticated user's ID
     if (req.user._id.toString() !== userId) {
-      return res.status(403).json({ message: "You are not authorized to view this favorites" });
+      return res.status(403).json({ message: "You are not authorized to view other user's favorites" });
     }
 
     const user = await User.findById(userId).populate('favorites'); // Populate the favorites with book data
@@ -141,11 +141,16 @@ const getUserFavorites = async (req, res) => {
   }
 };
 
-// POST /users/:userId/favorites
+// POST /users/favorites
 const addFavoriteBook = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const { userId } = req.body;
     const { bookId } = req.body;
+
+    // Check if the userId in the params matches the authenticated user's ID
+    if (req.user._id.toString() !== userId) {
+      return res.status(403).json({ message: "You are not authorized to add favorites for other users" });
+    }
 
     if (!bookId) {
       return res.status(400).json({ message: "Book ID is required" });
@@ -168,11 +173,16 @@ const addFavoriteBook = async (req, res) => {
   }
 };
 
-// DELETE /users/:userId/favorites
+// DELETE /users/favorites/:userId/:bookId
 const removeFavoriteBook = async (req, res) => {
   try {
-    const userId = req.params.userId;
-    const { bookId } = req.body;
+    const { userId } = req.params;
+    const { bookId } = req.params;
+
+    // Check if the userId in the params matches the authenticated user's ID
+    if (req.user._id.toString() !== userId) {
+      return res.status(403).json({ message: "You are not authorized to delete favorites for other users" });
+    }
 
     if (!bookId) {
       return res.status(400).json({ message: "Book ID is required" });
