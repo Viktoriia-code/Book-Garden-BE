@@ -26,6 +26,10 @@ const userSchema = new Schema(
       required: [true, "Please provide an email."],
       unique: true 
     },
+    favorites: { 
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }], // Array of favorite book IDs
+      default: [] 
+    },
     isAdmin: { 
       type: Boolean, 
       required: false, 

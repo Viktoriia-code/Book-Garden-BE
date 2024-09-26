@@ -52,14 +52,26 @@ const loginUser = async (req, res) => {
   }
 };
 
-// GET /users/profile
+// GET /users/:userId
 const getUserProfile = async (req, res) => {
-  const user = await User.findById(req.user._id);
-  
-  if (user) {
-    res.status(200).json(user);
-  } else {
-    res.status(404).json({ message: "User not found" });
+  const { userId } = req.params;
+
+  try {
+    // Check if the userId in the params matches the authenticated user's ID
+    if (req.user._id.toString() !== userId) {
+      return res.status(403).json({ message: "You are not authorized to view this profile" });
+    }
+
+    // Fetch the user profile by ID
+    const user = await User.findById(userId);
+
+    if (user) {
+      return res.status(200).json(user);
+    } else {
+      return res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -107,6 +119,79 @@ const deleteUser = async (req, res) => {
   }
 };
 
+// GET /users/:userId/favorites
+const getUserFavorites = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    // Check if the userId in the params matches the authenticated user's ID
+    if (req.user._id.toString() !== userId) {
+      return res.status(403).json({ message: "You are not authorized to view this favorites" });
+    }
+
+    const user = await User.findById(userId).populate('favorites'); // Populate the favorites with book data
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json(user.favorites);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// POST /users/:userId/favorites
+const addFavoriteBook = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { bookId } = req.body;
+
+    if (!bookId) {
+      return res.status(400).json({ message: "Book ID is required" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (!user.favorites.includes(bookId)) {
+      user.favorites.push(bookId);
+      await user.save();
+      return res.status(200).json({ message: "Book added to favorites", favorites: user.favorites });
+    } else {
+      return res.status(400).json({ message: "Book is already in favorites" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// DELETE /users/:userId/favorites
+const removeFavoriteBook = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { bookId } = req.body;
+
+    if (!bookId) {
+      return res.status(400).json({ message: "Book ID is required" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.favorites = user.favorites.filter(favId => favId.toString() !== bookId);
+    await user.save();
+
+    return res.status(200).json({ message: "Book removed from favorites", favorites: user.favorites });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserProfile,
@@ -114,4 +199,7 @@ module.exports = {
   loginUser,
   updateUser,
   deleteUser,
+  getUserFavorites,
+  addFavoriteBook,
+  removeFavoriteBook,
 };

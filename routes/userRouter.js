@@ -7,6 +7,9 @@ const {
   loginUser,
   updateUser,
   deleteUser,
+  getUserFavorites,
+  addFavoriteBook,
+  removeFavoriteBook
 } = require('../controllers/userControllers');
 const User = require('../models/userModel');
 const requireAuth = require('../middleware/requireAuth');
@@ -23,12 +26,21 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 
 // GET /users/profile
-router.get('/profile', requireAuth, getUserProfile);
+router.get('/:userId', requireAuth, getUserProfile);
 
 // PATCH /users/:userId
 router.patch('/:userId', requireAuth, updateUser);
 
 // DELETE /users/:userId
 router.delete('/:userId', requireAuth, deleteUser);
+
+// GET /users/:userId/favorites
+router.get('/:userId/favorites', requireAuth, getUserFavorites);
+
+// POST /users/:userId/favorites
+router.post('/:userId/favorites', requireAuth, addFavoriteBook);
+
+// DELETE /users/:userId/favorites
+router.delete('/:userId/favorites', requireAuth, removeFavoriteBook);
 
 module.exports = router;

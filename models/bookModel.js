@@ -27,7 +27,7 @@ const bookSchema = new Schema(
     author: { type: String, required: true },
     genre: { type: String, required: true },
     description: { type: String, required: true },
-    rating: { type: Number, required: false },
+    rating: { type: Number, required: false, default: 0 }, // Store average rating
     year: { type: Number, required: true },
     publisher: { type: String, required: false },
     ISBN: { type: String, required: false },

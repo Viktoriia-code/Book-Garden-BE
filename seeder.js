@@ -28,6 +28,16 @@ const importData = async () => {
 
     await Review.insertMany(sampleReviews);
 
+    // Now update the ratings for the books based on the inserted reviews
+    for (const book of createdBooks) {
+      const reviewsForBook = await Review.find({ book: book._id });
+      const totalSum = reviewsForBook.reduce((acc, currReview) => acc + currReview.rating, 0);
+      const newAverageRating = reviewsForBook.length > 0 ? (totalSum / reviewsForBook.length).toFixed(1) : 0;
+
+      // Update the book's rating
+      await Book.findByIdAndUpdate(book._id, { rating: parseFloat(newAverageRating) }, { new: true });
+    }
+
     console.log('Data Imported!'.green.inverse);
     process.exit();
   } catch (error) {
