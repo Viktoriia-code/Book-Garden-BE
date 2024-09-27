@@ -46,6 +46,26 @@ const getTopBooks = async (req, res) => {
   res.json(topBooks);
 };
 
+// GET /books/search/:searchQuery
+const getBooksBySearch = async (req, res) => {
+  try {
+    const query = req.params.searchQuery
+    const books = await Book.find({
+      $or: [
+        { ISBN: { $regex: query, $options: 'i' } },
+        { title: { $regex: query, $options: 'i' } },
+        { author: { $regex: query, $options: 'i' } },
+        { language: { $regex: query, $options: 'i' } },
+        { genre: { $regex: query, $options: 'i' } },
+        { description: { $regex: query, $options: 'i' } },
+      ]
+    });
+    res.json(books)
+  } catch (error) {
+    res.status(500).json({message: "Something went wrong. Check your query"})
+  }
+}
+
 // POST /books
 const createBook = async (req, res) => {
   try {
@@ -128,6 +148,7 @@ module.exports = {
   getBookById,
   getNewBooks,
   getTopBooks,
+  getBooksBySearch,
   createBook,
   updateBook,
   deleteBook,
