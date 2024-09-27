@@ -5,6 +5,7 @@ const {
   getBookById,
   getNewBooks,
   getTopBooks,
+  getBooksByGenre,
   getBooksBySearch,
   createBook,
   updateBook,
@@ -28,6 +29,9 @@ router.get('/:bookId/reviews', getReviewsByBookId);
 
 // GET /books/:bookId
 router.get('/:bookId', getBookById);
+
+// GET /books/genre/:genre
+router.get('/genre/:genre', getBooksByGenre);
 
 // GET /books/search/:searchQuery
 router.get('/search/:searchQuery', getBooksBySearch);

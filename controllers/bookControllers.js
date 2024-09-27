@@ -46,6 +46,19 @@ const getTopBooks = async (req, res) => {
   res.json(topBooks);
 };
 
+// GET /books/:genre
+const getBooksByGenre = async (req, res) => {
+  try {
+    const genre = req.params.genre
+    const booksByGenre = await Book.find({
+      genre: { $regex: genre, $options: 'i' }
+    })
+    res.json(booksByGenre)
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong" })
+  }
+}
+
 // GET /books/search/:searchQuery
 const getBooksBySearch = async (req, res) => {
   try {
@@ -62,7 +75,7 @@ const getBooksBySearch = async (req, res) => {
     });
     res.json(books)
   } catch (error) {
-    res.status(500).json({message: "Something went wrong. Check your query"})
+    res.status(500).json({ message: "Something went wrong. Check your query" })
   }
 }
 
@@ -148,6 +161,7 @@ module.exports = {
   getBookById,
   getNewBooks,
   getTopBooks,
+  getBooksByGenre,
   getBooksBySearch,
   createBook,
   updateBook,
