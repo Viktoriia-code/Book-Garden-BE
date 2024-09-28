@@ -6,6 +6,7 @@ const path = require('path');
 const bookRouter = require('./routes/bookRouter');
 const userRouter = require('./routes/userRouter');
 const reviewRouter = require('./routes/reviewRouter');
+const cartRouter = require('./routes/cartRouter');
 // Middleware:
 const requestLogger = require("./middleware/requestLogger");
 const notFound = require("./middleware/notFound");
@@ -44,6 +45,9 @@ app.use('/api/users', userRouter);
 
 // Use the reviewRouter for all /reviews routes
 app.use('/api/reviews', reviewRouter);
+
+// Use the userRouter for all /cart routes
+app.use('/api/cart', cartRouter);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -15,7 +15,13 @@ const CartSchema = new Schema(
           required: true,
           ref: 'Book',
         },
-        quantity: { type: Number },
+        quantity: { 
+          type: Number, 
+          required: true,
+          min: 1,
+          default: 1 
+        },
+        _id: false,
       }
     ] 
   }
