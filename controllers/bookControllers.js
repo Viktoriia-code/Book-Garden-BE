@@ -55,7 +55,7 @@ const getBooksByGenre = async (req, res) => {
     })
     res.json(booksByGenre)
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong" })
+    res.status(500).json({ message: "Failed to retrieve books by genre" })
   }
 }
 
@@ -75,7 +75,22 @@ const getBooksBySearch = async (req, res) => {
     });
     res.json(books)
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong. Check your query" })
+    res.status(500).json({ message: "Searching for books by query failed. Check your query" })
+  }
+}
+
+// GET /books/unique/:fieldName
+const getUniqueByFieldName = async (req, res) => {
+  // retrieves unique values in book database by fieldName eq. :fieldName genre
+  // returns every unique genre value that is listed in the database
+  // (used for store filtering)
+
+  try {
+    const fieldName = req.params.fieldName;
+    const uniqueValues = await Book.distinct(fieldName);
+    res.json(uniqueValues);
+  } catch (error) {
+    res.status(400).json("Failed to get. Check that your :fieldName is a real field in the book model.")
   }
 }
 
@@ -163,6 +178,7 @@ module.exports = {
   getTopBooks,
   getBooksByGenre,
   getBooksBySearch,
+  getUniqueByFieldName,
   createBook,
   updateBook,
   deleteBook,
