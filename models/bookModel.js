@@ -36,8 +36,8 @@ const bookSchema = new Schema(
     language: { type: String, required: true },
     image: { type: String, required: false },
     price: { type: Number, required: true }
-  },
+  },  
   { timestamps: true }
-);
+);  
 
 module.exports = mongoose.model("Book", bookSchema);

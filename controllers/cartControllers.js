@@ -59,8 +59,8 @@ const addBookToCart = async (req, res) => {
   }
 };
 
-// POST /cart/remove
-const removeBookFromCart = async (req, res) => {
+// POST /cart/reduce
+const reduceBookQuantity = async (req, res) => {
   const { bookId } = req.body;
   const user = req.user._id;
 
@@ -109,8 +109,55 @@ const removeBookFromCart = async (req, res) => {
   }
 };
 
+// POST /cart/remove
+const removeBookFromCart = async (req, res) => {
+  const { bookId } = req.body;
+  const user = req.user._id;
+
+  // Validate the book ID
+  if (!mongoose.Types.ObjectId.isValid(bookId)) {
+    return res.status(400).json({ message: "Invalid book ID" });
+  }
+
+  try {
+    // Find the user's cart
+    let cart = await Cart.findOne({ user });
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    // Find the index of the book in the cart
+    const bookIndex = cart.products.findIndex(
+      (item) => item.book.toString() === bookId
+    );
+
+    if (bookIndex === -1) {
+      return res.status(404).json({ message: "Book not found in cart" });
+    }
+
+    // Remove the book completely from the cart
+    cart.products.splice(bookIndex, 1);
+
+    // Check if the cart is empty after the removal
+    if (cart.products.length === 0) {
+      // If the cart is empty, remove it from the database
+      await Cart.deleteOne({ _id: cart._id });
+      return res.status(200).json({ message: "Cart is empty and has been removed" });
+    } else {
+      // Otherwise, save the updated cart
+      await cart.save();
+      return res.status(200).json(cart);
+    }
+  } catch (error) {
+    console.error("Error removing book from cart:", error.message);
+    res.status(500).json({ message: "Failed to remove book from cart", error: error.message });
+  }
+};
+
 module.exports = {
   getCart,
   addBookToCart,
+  reduceBookQuantity,
   removeBookFromCart,
 };
