@@ -5,7 +5,9 @@ const {
   getBookById,
   getNewBooks,
   getTopBooks,
+  getBooksByGenre,
   getBooksBySearch,
+  getUniqueByFieldName, 
   createBook,
   updateBook,
   deleteBook,
@@ -29,8 +31,14 @@ router.get('/:bookId/reviews', getReviewsByBookId);
 // GET /books/:bookId
 router.get('/:bookId', getBookById);
 
+// GET /books/genre/:genre
+router.get('/genre/:genre', getBooksByGenre);
+
 // GET /books/search/:searchQuery
 router.get('/search/:searchQuery', getBooksBySearch);
+
+// GET /books/unique/:fieldName
+router.get('/unique/:fieldName', getUniqueByFieldName);
 
 // require auth with admin account for the rest of operations (will be uncommented after development)
 // router.use(requireAuth, requireAdmin);
