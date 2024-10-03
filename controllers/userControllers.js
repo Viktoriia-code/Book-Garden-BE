@@ -105,6 +105,46 @@ const updateUser = async (req, res) => {
   }
 };
 
+// PATCH /users/:userId/password
+const updateUserPassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const { userId } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: "Invalid user ID" });
+  }
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.hashedPassword);
+    if (!isMatch) {
+      console.log('Current password is incorrect');
+      return res.status(400).json({ message: 'Current password is incorrect' });
+    }
+
+    console.log('Current password matched. Proceeding to update new password...');
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    console.log('New hashed password:', hashedPassword);  // 确认新密码已加密
+
+    user.hashedPassword  = hashedPassword;
+    await user.save();
+
+    console.log('Password updated successfully for user:', userId);
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Error updating password:', error);  // 捕捉并打印详细错误信息
+    res.status(500).json({ message: 'Error updating password' });
+  }
+};
+
+
 // DELETE /users/:userId
 const deleteUser = async (req, res) => {
   const { userId } = req.params;
@@ -215,6 +255,7 @@ module.exports = {
   loginUser,
   updateUser,
   deleteUser,
+  updateUserPassword,
   getUserFavorites,
   addFavoriteBook,
   removeFavoriteBook,
