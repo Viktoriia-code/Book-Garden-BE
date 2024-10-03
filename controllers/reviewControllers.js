@@ -21,23 +21,32 @@ const createReview = async (req, res) => {
   }
 };
 
-// GET /reviews/:ReviewId
-const getReviewById = async (req, res) => {
-  const { reviewId } = req.params;
+// GET /reviews/user/:userId
+const getReviewsByUserId = async (req, res) => {
+  const { userId } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(reviewId)) {
-    return res.status(400).json({ message: "Invalid review ID" });
+  // Validate the user ID
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: "Invalid user ID" });
   }
 
   try {
-    const review = await Review.findById(reviewId);
-    if (review) {
-      res.status(200).json(review);
+    // Check if the userId in the params matches the authenticated user's ID
+    if (req.user._id.toString() !== userId) {
+      return res.status(403).json({ message: "You are not allowed to see other users' reviews list" });
+    }
+
+    // Find all reviews associated with the given user ID
+    const reviews = await Review.find({ user: userId });
+
+    if (reviews.length > 0) {
+      res.status(200).json(reviews);
     } else {
-      res.status(404).json({ message: "review not found" });
+      res.status(404).json({ message: "The user doesn't have reviews yet." });
     }
   } catch (error) {
-    res.status(500).json({ message: "Failed to retrieve review" });
+    console.error("Error retrieving reviews:", error.message);
+    res.status(500).json({ message: "Failed to retrieve reviews", error: error.message });
   }
 };
 
@@ -87,7 +96,7 @@ const deleteReview = async (req, res) => {
 
 module.exports = {
   getAllReviews,
-  getReviewById,
+  getReviewsByUserId,
   createReview,
   updateReview,
   deleteReview,

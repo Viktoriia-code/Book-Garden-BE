@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
   getAllReviews,
-  getReviewById,
+  getReviewsByUserId,
   createReview,
   updateReview,
   deleteReview,
@@ -15,8 +15,8 @@ router.get('/', getAllReviews);
 // POST /reviews
 router.post('/', requireAuth, createReview);
 
-// GET /reviews/:reviewId
-router.get('/:reviewId', requireAuth, getReviewById);
+// GET /reviews/user/:userId
+router.get('/user/:userId', requireAuth, getReviewsByUserId);
 
 // PATCH /reviews/:reviewId
 router.patch('/:reviewId', requireAuth, updateReview);
