@@ -126,20 +126,14 @@ const updateUserPassword = async (req, res) => {
       return res.status(400).json({ message: 'Current password is incorrect' });
     }
 
-    console.log('Current password matched. Proceeding to update new password...');
-
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
-
-    console.log('New hashed password:', hashedPassword);  // 确认新密码已加密
-
     user.hashedPassword  = hashedPassword;
     await user.save();
-
-    console.log('Password updated successfully for user:', userId);
+    
     res.status(200).json({ message: 'Password updated successfully' });
   } catch (error) {
-    console.error('Error updating password:', error);  // 捕捉并打印详细错误信息
+    console.error('Error updating password:', error);
     res.status(500).json({ message: 'Error updating password' });
   }
 };
