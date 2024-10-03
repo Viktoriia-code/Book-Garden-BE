@@ -7,6 +7,7 @@ const {
   loginUser,
   updateUser,
   deleteUser,
+  updateUserPassword,
   getUserFavorites,
   addFavoriteBook,
   removeFavoriteBook
@@ -33,6 +34,9 @@ router.patch('/:userId', requireAuth, updateUser);
 
 // DELETE /users/:userId
 router.delete('/:userId', requireAuth, deleteUser);
+
+// PATCH /users/:userId/password
+router.patch('/:userId/password', requireAuth, updateUserPassword);
 
 // GET /users/favorites/:userId
 router.get('/favorites/:userId', requireAuth, getUserFavorites);
