@@ -18,6 +18,7 @@ This app was developed as part of "Web development" course at Metropolia UAS.
 - colors module for styling console output
 - seeder.js for populating the database with initial data
 - validator module for checking emails and passwords
+- swagger for API documentation
 
 ## 🔧 How to run locally:
 
