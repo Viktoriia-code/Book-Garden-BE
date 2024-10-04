@@ -1,22 +1,3 @@
-/* // The data title for book is as follows
-{
-  id: 1,
-  title: "The Great Gatsby",       // required field
-  author: "F. Scott Fitzgerald",   // required field
-  genre: "Fiction",                // required field
-  description: "Sample text",      // required field
-  rating: 5,                       // optional field
-  year: 2024,                      // required field
-  publisher: "Charles Scribner's Sons",  // optional field
-  ISBN: "9780743273565",           // optional field
-  binding: "Hardback",             // optional field
-  pages: 218,                      // optional field
-  language: "English",             // required field
-  image: "/images/the-great-gatsby.jpg",  // optional field
-  price: 35.50,                    // required field
-}
-*/
-
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;

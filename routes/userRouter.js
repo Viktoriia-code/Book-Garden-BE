@@ -14,10 +14,9 @@ const {
 } = require('../controllers/userControllers');
 const User = require('../models/userModel');
 const requireAuth = require('../middleware/requireAuth');
-//const requireAdmin = require('../middleware/requireAdmin');
+
 
 // GET /users
-// router.get('/', requireAuth, requireAdmin, getAllUsers); <- works for auth admin account only, this line will be uncommented once the developemtn will be finished
 router.get('/', getAllUsers);
 
 // POST /users/register

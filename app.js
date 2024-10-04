@@ -2,6 +2,9 @@ const connectDB = require("./config/db");
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const swaggerUI = require('swagger-ui-express');
+const swaggerSpec = require('./utils/swagger');
+
 // Routers:
 const bookRouter = require('./routes/bookRouter');
 const userRouter = require('./routes/userRouter');
@@ -18,6 +21,9 @@ const requireAuth = require('./middleware/requireAuth');
 const app = express();
 
 connectDB();
+
+// Serve Swagger documentation
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 // middleware for cross-origin resource sharing
 app.use(cors());

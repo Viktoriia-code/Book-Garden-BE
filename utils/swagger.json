@@ -1,0 +1,1339 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Book Garden API",
+    "version": "1.0.0",
+    "description": "API for managing users, books, reviews, shopping cart and orders."
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "firstName": { "type": "string" },
+          "lastName": { "type": "string" },
+          "username": { "type": "string" },
+          "email": { "type": "string" },
+          "favorites": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Book" }
+          },
+          "isAdmin": { "type": "boolean" }
+        }
+      },
+      "Book": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "genre": { "type": "string" },
+          "description": { "type": "string" },
+          "rating": { "type": "number" },
+          "year": { "type": "number" },
+          "publisher": { "type": "string" },
+          "ISBN": { "type": "string" },
+          "binding": { "type": "string" },
+          "pages": { "type": "number" },
+          "language": { "type": "string" },
+          "image": { "type": "string" },
+          "price": { "type": "number" }
+        },
+        "required": ["title", "author", "genre", "description", "year", "language", "price"]
+      },
+      "Review": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unique identifier for the review"
+          },
+          "user": {
+            "type": "string",
+            "description": "User ID who created the review"
+          },
+          "book": {
+            "type": "string",
+            "description": "Book ID that this review is associated with"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Comment text of the review"
+          },
+          "rating": {
+            "type": "number",
+            "description": "Rating given to the book"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the review was created"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date and time when the review was last updated"
+          }
+        },
+        "required": ["user", "book", "comment", "rating"]
+      },
+      "Cart": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "format": "ObjectId",
+            "description": "ID of the user owning the cart"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "book": {
+                  "type": "string",
+                  "format": "ObjectId",
+                  "description": "ID of the book"
+                },
+                "quantity": {
+                  "type": "integer",
+                  "description": "Quantity of the book in the cart"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "example": "603d2f1bfbf0e459f0b74d1a"
+          },
+          "number": {
+            "type": "string",
+            "example": "ORD-1625759837387"
+          },
+          "price": {
+            "type": "number",
+            "example": 29.99
+          },
+          "status": {
+            "type": "string",
+            "example": "processing"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-01T12:34:56.789Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-10-01T12:34:56.789Z"
+          }
+        },
+        "required": ["user", "number", "price", "status"]
+      },
+      "RegisterUser": {
+        "type": "object",
+        "properties": {
+          "firstName": { "type": "string" },
+          "lastName": { "type": "string" },
+          "username": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        },
+        "required": ["firstName", "lastName", "username", "email", "password"]
+      },
+      "LoginUser": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        },
+        "required": ["email", "password"]
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "token": { "type": "string" },
+          "userId": { "type": "string" }
+        }
+      },
+      "UpdatePassword": {
+        "type": "object",
+        "properties": {
+          "currentPassword": { "type": "string" },
+          "newPassword": { "type": "string" }
+        },
+        "required": ["currentPassword", "newPassword"]
+      },
+      "ReviewInput": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "description": "User ID who created the review"
+          },
+          "book": {
+            "type": "string",
+            "description": "Book ID that this review is associated with"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Comment text of the review"
+          },
+          "rating": {
+            "type": "number",
+            "description": "Rating given to the book"
+          }
+        },
+        "required": ["user", "book", "comment", "rating"]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Operations related to users"
+    },
+    {
+      "name": "Books",
+      "description": "Operations related to books"
+    },
+    {
+      "name": "Reviews",
+      "description": "Operations related to book reviews"
+    },
+    {
+      "name": "Cart",
+      "description": "Operations related to shopping cart"
+    },
+    {
+      "name": "Orders",
+      "description": "Operations related to orders"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users",
+        "description": "Retrieve a list of all users.",
+        "responses": {
+          "200": {
+            "description": "A list of users.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/User" }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve users."
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Register a new user",
+        "description": "Register a new user by providing personal details and a password.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RegisterUser" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User registered successfully.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AuthResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request or validation error."
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user",
+        "description": "Authenticate a user and return a JWT token.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginUser" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AuthResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid email or password."
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user profile",
+        "description": "Get the profile of a user by ID. Requires authentication.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User profile found.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized to view this profile."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Update user profile",
+        "description": "Update the details of a user by ID. Requires authentication.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateUser" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete user",
+        "description": "Delete a user by ID. Requires authentication.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+    "/users/{userId}/password": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Update user password",
+        "description": "Update the password of a user. Requires current password for verification.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdatePassword" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password updated successfully."
+          },
+          "400": {
+            "description": "Current password is incorrect."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+    "/users/favorites/{userId}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user's favorite books",
+        "description": "Retrieve a list of user's favorite books. Requires authentication.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of favorite books retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Book" }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized to view this user's favorites."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+    "/users/favorites": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Add book to user's favorites",
+        "description": "Add a book to the user's favorites list.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/FavoriteRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Book added to favorites.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "favorites": {
+                      "type": "array",
+                      "items": { "$ref": "#/components/schemas/Book" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Book already in favorites."
+          }
+        }
+      }
+    },
+    "/users/favorites/{userId}/{bookId}": {
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Remove book from user's favorites",
+        "description": "Remove a book from the user's favorites list.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "bookId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book removed from favorites."
+          },
+          "404": {
+            "description": "User or book not found."
+          }
+        }
+      }
+    },
+    "/books": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get all books",
+        "operationId": "getAllBooks",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve books"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Books"],
+        "summary": "Create a new book",
+        "operationId": "createBook",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Book created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to create book"
+          }
+        }
+      }
+    },
+    "/books/new": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get newly added books",
+        "operationId": "getNewBooks",
+        "responses": {
+          "200": {
+            "description": "List of new books",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/topsellers": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get top-selling books",
+        "operationId": "getTopBooks",
+        "responses": {
+          "200": {
+            "description": "List of top-selling books",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/{bookId}/reviews": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get reviews for a book",
+        "operationId": "getReviewsByBookId",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of reviews for the book",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Review"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No reviews found"
+          },
+          "500": {
+            "description": "Failed to fetch reviews"
+          }
+        }
+      }
+    },
+    "/books/{bookId}": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get a book by its ID",
+        "operationId": "getBookById",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Book not found"
+          },
+          "500": {
+            "description": "Failed to retrieve book"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Books"],
+        "summary": "Update a book by its ID",
+        "operationId": "updateBook",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Book"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Book updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Book not found"
+          },
+          "500": {
+            "description": "Failed to update book"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Books"],
+        "summary": "Delete a book by its ID",
+        "operationId": "deleteBook",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book deleted successfully"
+          },
+          "404": {
+            "description": "Book not found"
+          },
+          "500": {
+            "description": "Failed to delete book"
+          }
+        }
+      }
+    },
+    "/books/genre/{genre}": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get books by genre",
+        "operationId": "getBooksByGenre",
+        "parameters": [
+          {
+            "name": "genre",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Books by genre",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve books by genre"
+          }
+        }
+      }
+    },
+    "/books/search/{searchQuery}": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Search books by query",
+        "operationId": "getBooksBySearch",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Books matching the search query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Searching for books failed"
+          }
+        }
+      }
+    },
+    "/books/unique/{fieldName}": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get unique values by field name",
+        "operationId": "getUniqueByFieldName",
+        "parameters": [
+          {
+            "name": "fieldName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Unique values for the specified field"
+          },
+          "400": {
+            "description": "Invalid field name"
+          }
+        }
+      }
+    },
+    "/reviews": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get all reviews",
+        "responses": {
+          "200": {
+            "description": "A list of reviews",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Review"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve reviews"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Reviews"],
+        "summary": "Create a new review",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Review created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Review"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to create review"
+          }
+        }
+      }
+    },
+    "/reviews/user/{userId}": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get reviews by user ID",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of reviews for the specified user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Review"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - not authorized to view other users' reviews"
+          },
+          "404": {
+            "description": "User has no reviews"
+          },
+          "400": {
+            "description": "Invalid user ID"
+          },
+          "500": {
+            "description": "Failed to retrieve reviews"
+          }
+        }
+      }
+    },
+    "/reviews/{reviewId}": {
+      "patch": {
+        "tags": ["Reviews"],
+        "summary": "Update a review",
+        "parameters": [
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Review updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Review"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Review not found"
+          },
+          "400": {
+            "description": "Invalid review ID"
+          },
+          "500": {
+            "description": "Failed to update review"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Reviews"],
+        "summary": "Delete a review",
+        "parameters": [
+          {
+            "name": "reviewId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Review deleted successfully"
+          },
+          "404": {
+            "description": "Review not found"
+          },
+          "400": {
+            "description": "Invalid review ID"
+          },
+          "500": {
+            "description": "Failed to delete review"
+          }
+        }
+      }
+    },
+    "/cart": {
+      "get": {
+        "tags": ["Cart"],
+        "summary": "Get user's cart",
+        "description": "Retrieve the current user's shopping cart.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cart retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cart"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cart is empty",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/add": {
+      "post": {
+        "tags": ["Cart"],
+        "summary": "Add a book to cart",
+        "description": "Add a specified book to the user's shopping cart.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddBookRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Book added to cart successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cart"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid book ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Book not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to add book to cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/reduce": {
+      "post": {
+        "tags": ["Cart"],
+        "summary": "Reduce book quantity",
+        "description": "Reduce the quantity of a specified book in the user's shopping cart by one.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReduceBookRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Book quantity reduced successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cart"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid book ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Book not found in cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to remove book from cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cart/remove": {
+      "post": {
+        "tags": ["Cart"],
+        "summary": "Remove a book from cart",
+        "description": "Remove a specified book completely from the user's shopping cart.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveBookRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Book removed from cart successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cart"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid book ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Book not found in cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to remove book from cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{userId}": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get orders by user ID",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to retrieve orders for",
+            "schema": {
+              "type": "string",
+              "example": "603d2f1bfbf0e459f0b74d1a"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of orders",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user ID supplied"
+          },
+          "403": {
+            "description": "User not authorized to view these orders"
+          },
+          "404": {
+            "description": "No orders found for this user"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "tags": ["Orders"],
+        "summary": "Create a new order",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Order created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to create order"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  }
+}
