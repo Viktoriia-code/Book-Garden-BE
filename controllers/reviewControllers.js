@@ -37,7 +37,7 @@ const getReviewsByUserId = async (req, res) => {
     }
 
     // Find all reviews associated with the given user ID
-    const reviews = await Review.find({ user: userId });
+    const reviews = await Review.find({ user: userId }).populate('book', 'title author');
 
     if (reviews.length > 0) {
       res.status(200).json(reviews);

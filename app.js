@@ -25,6 +25,11 @@ connectDB();
 // Serve Swagger documentation
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
+// Serve the OpenAPI JSON
+app.get('/api/swagger.json', (req, res) => {
+  res.sendFile(path.join(__dirname, './utils/swagger.json'));
+});
+
 // middleware for cross-origin resource sharing
 app.use(cors());
 
