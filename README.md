@@ -119,3 +119,9 @@ You can view the API documentation in two ways:
 - **Orders**
     - **GET /orders/{userId}:** Get orders by user ID
     - **POST /orders:** Create a new order
+
+### Authentication
+Some endpoints require authentication. Ensure you provide a valid Bearer token in the Authorization header when making requests to protected routes.
+```
+Authorization: Bearer YOUR_JWT_TOKEN
+```
