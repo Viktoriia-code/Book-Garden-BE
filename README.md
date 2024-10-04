@@ -61,3 +61,61 @@ npm run data:import
 ```
 npm run data:destroy
 ```
+
+## API Documentation
+The API is documented using the OpenAPI Specification (formerly known as Swagger).
+
+### Accessing the API Documentation
+You can view the API documentation in two ways:
+1. **Swagger UI**:
+- Navigate to the following URL in your browser:
+[http://localhost:4000/api-docs/](http://localhost:4000/api-docs/) (Replace localhost:4000 with your server's address and port if different.)
+
+2. **OpenAPI JSON**:
+- The OpenAPI specification can be accessed directly in JSON format at:
+[http://localhost:4000/utils/swagger.json](http://localhost:4000/api/swagger.json)
+(Again, replace with your server's address and port if needed.)
+
+## API Overview
+- **Base URL**:
+
+  The base URL for all API endpoints is: [http://localhost:4000/api/](http://localhost:4000/api/)
+
+### Endpoints
+- **Users**
+    - **GET /users:** Get all users
+    - **POST /users/register:** Register a new user
+    - **POST /users/login:** Login user
+    - **GET /users/{userId}:** Get user profile
+    - **PATCH /users/{userId}:** Update user profile
+    - **DELETE /users/{userId}:** Delete user
+    - **PATCH /users/{userId}/password:** Update user password
+    - **GET /users/favorites/{userId}:** Get user's favorite books
+    - **POST /users/favorites:** Add book to user's favorites
+    - **DELETE /users/favorites/{userId}/{bookId}:** Remove book from user's favorites
+- **Books**
+    - **GET /books:** Get all books
+    - **POST /books:** Create a new book
+    - **GET /books/new:** Get newly added books
+    - **GET /books/topsellers:** Get top-selling books
+    - **GET /books/{bookId}/reviews:** Get reviews for a book
+    - **GET /books/{bookId}:** Get a book by its ID
+    - **PATCH /books/{bookId}:** Update a book by its ID
+    - **DELETE /books/{bookId}:** Delete a book by its ID
+    - **GET /books/genre/{genre}:** Get books by genre
+    - **GET /books/search/{searchQuery}:** Search books by query
+    - **GET /books/unique/{fieldName}:** Get unique values by field name
+- **Reviews**
+    - **GET /reviews:** Get all reviews
+    - **POST /reviews:** Create a new review
+    - **GET /reviews/user/{userId}:** Get reviews by user ID
+    - **PATCH /reviews/{reviewId}:** Update a review
+    - **DELETE /reviews/{reviewId}:** Delete a review
+- **Cart**
+    - **GET /cart:** Get user's cart
+    - **POST /cart/add:** Add a book to cart
+    - **POST /cart/reduce:** Reduce book quantity
+    - **POST /cart/remove:** Remove a book from cart
+- **Orders**
+    - **GET /orders/{userId}:** Get orders by user ID
+    - **POST /orders:** Create a new order
