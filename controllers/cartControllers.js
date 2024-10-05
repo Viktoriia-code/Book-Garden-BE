@@ -5,28 +5,14 @@ const mongoose = require("mongoose");
 // GET /cart
 const getCart = async (req, res) => {
   const user = req.user._id;
-
-  // try {
-  //   const cart = await Cart.findOne({ user });
-
-    //     if (cart && cart.products && cart.products.length > 0) {
-    //       res.status(200).json(cart);
-    //     } else {
-    //       res.status(404).json({ message: "Cart is empty" });
-    //     }
-    //   } catch (error) {
-    //     res.status(500).json({ error: "Failed to retrieve cart" });
-    //   }
-    // };
     try {
-      // 使用 populate 方法来获取每本书的详细信息
       const cart = await Cart.findOne({ user }).populate({
-        path: 'products.book', // products 数组中的 book 字段
-        model: 'Book',         // 关联的 Book 模型
+        path: 'products.book', 
+        model: 'Book',         
       });
 
       if (cart && cart.products && cart.products.length > 0) {
-        res.status(200).json(cart);  // 现在返回的数据包含完整的书籍详情
+        res.status(200).json(cart);  
       } else {
         res.status(404).json({ message: "Cart is empty" });
       }
