@@ -18,6 +18,6 @@ router.post('/add', requireAuth, addBookToCart);
 router.post('/reduce', requireAuth, reduceBookQuantity);
 
 // DELETE /cart/remove (Remove the book completely)
-router.post('/remove', requireAuth, removeBookFromCart);
+router.delete('/remove', requireAuth, removeBookFromCart);
 
 module.exports = router;
