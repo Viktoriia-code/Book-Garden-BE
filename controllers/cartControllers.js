@@ -12,7 +12,7 @@ const getCart = async (req, res) => {
     });
 
     if (cart && cart.products && cart.products.length > 0) {
-      res.status(200).json(cart);  
+      res.status(200).json(cart);
     } else {
       res.status(404).json({ message: "Cart is empty" });
     }
@@ -111,7 +111,7 @@ const reduceBookQuantity = async (req, res) => {
   }
 };
 
-// POST /cart/remove
+// DELETE /cart/remove
 const removeBookFromCart = async (req, res) => {
   const { bookId } = req.body;
   const user = req.user._id;
