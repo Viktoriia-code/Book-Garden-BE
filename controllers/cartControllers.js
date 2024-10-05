@@ -1,13 +1,15 @@
 const Cart = require("../models/cartModel");
-const Book = require("../models/bookModel"); // Assuming you have a book model
+const Book = require("../models/bookModel");
 const mongoose = require("mongoose");
 
 // GET /cart
 const getCart = async (req, res) => {
   const user = req.user._id;
-  
   try {
-    const cart = await Cart.findOne({ user });
+    const cart = await Cart.findOne({ user }).populate({
+      path: 'products.book',
+      model: 'Book',
+    });
 
     if (cart && cart.products && cart.products.length > 0) {
       res.status(200).json(cart);
@@ -109,7 +111,7 @@ const reduceBookQuantity = async (req, res) => {
   }
 };
 
-// POST /cart/remove
+// DELETE /cart/remove
 const removeBookFromCart = async (req, res) => {
   const { bookId } = req.body;
   const user = req.user._id;
