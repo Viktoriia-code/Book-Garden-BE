@@ -11,6 +11,8 @@ const userRouter = require('./routes/userRouter');
 const reviewRouter = require('./routes/reviewRouter');
 const cartRouter = require('./routes/cartRouter');
 const orderRouter = require('./routes/orderRouter');
+const newsletterRouter = require('./routes/newsletterRouter')
+
 // Middleware:
 const requestLogger = require("./middleware/requestLogger");
 const notFound = require("./middleware/notFound");
@@ -63,6 +65,9 @@ app.use('/api/cart', cartRouter);
 
 // Use the orderRouter for all /orders routes
 app.use('/api/orders', orderRouter);
+
+// Use the newsletterRouter for all /newsletter routes
+app.use('/api/newsletter', newsletterRouter);
 
 app.use(notFound);
 app.use(errorHandler);
