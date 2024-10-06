@@ -1,5 +1,4 @@
 const Newsletter = require("../models/newsletterModel");
-const mongoose = require("mongoose");
 
 const createNewsletter = async (req, res) => {
   const { email } = req.body;
@@ -13,6 +12,4 @@ const createNewsletter = async (req, res) => {
   }
 };
 
-module.exports = {
-  createNewsletter
-};
+module.exports = { createNewsletter };

@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const {
-  createNewsletter
-} = require('../controllers/newsletterControllers');
+const { createNewsletter } = require('../controllers/newsletterControllers');
 
-
-// POST /cart/add
+// POST /newsletter/add
 router.post('/add', createNewsletter);
 
 module.exports = router;
