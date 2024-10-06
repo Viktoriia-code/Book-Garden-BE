@@ -1,13 +1,14 @@
+require('dotenv').config();
 const User = require("../models/userModel");
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 
-const SECRET="secretword";
-const saltRounds = 10;
+const jwtSecret = process.env.JWT_SECRET;
+const saltRounds = parseInt(process.env.SALT_ROUNDS) || 10;
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, SECRET, { expiresIn: '3d' });
+  return jwt.sign({ _id }, jwtSecret, { expiresIn: '3d' });
 };
 
 // GET /users
@@ -126,7 +127,7 @@ const updateUserPassword = async (req, res) => {
       return res.status(400).json({ message: 'Current password is incorrect' });
     }
 
-    const salt = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
     user.hashedPassword  = hashedPassword;
     await user.save();
