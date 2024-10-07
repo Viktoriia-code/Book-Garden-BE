@@ -142,6 +142,17 @@
         },
         "required": ["user", "number", "price", "status"]
       },
+      "Newsletter": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address to subscribe",
+            "example": "user@example.com"
+          }
+        }
+      },
       "RegisterUser": {
         "type": "object",
         "properties": {
@@ -221,6 +232,10 @@
     {
       "name": "Orders",
       "description": "Operations related to orders"
+    },
+    {
+      "name": "Newsletter",
+      "description": "Operations related to newsletter subscriptions"
     }
   ],
   "paths": {
@@ -306,6 +321,11 @@
         "tags": ["Users"],
         "summary": "Get user profile",
         "description": "Get the profile of a user by ID. Requires authentication.",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "userId",
@@ -334,6 +354,11 @@
       "patch": {
         "tags": ["Users"],
         "summary": "Update user profile",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "description": "Update the details of a user by ID. Requires authentication.",
         "parameters": [
           {
@@ -367,6 +392,11 @@
       "delete": {
         "tags": ["Users"],
         "summary": "Delete user",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "description": "Delete a user by ID. Requires authentication.",
         "parameters": [
           {
@@ -390,6 +420,11 @@
       "patch": {
         "tags": ["Users"],
         "summary": "Update user password",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "description": "Update the password of a user. Requires current password for verification.",
         "parameters": [
           {
@@ -423,6 +458,11 @@
       "get": {
         "tags": ["Users"],
         "summary": "Get user's favorite books",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "description": "Retrieve a list of user's favorite books. Requires authentication.",
         "parameters": [
           {
@@ -457,6 +497,11 @@
       "post": {
         "tags": ["Users"],
         "summary": "Add book to user's favorites",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "description": "Add a book to the user's favorites list.",
         "requestBody": {
           "content": {
@@ -493,6 +538,11 @@
       "delete": {
         "tags": ["Users"],
         "summary": "Remove book from user's favorites",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "description": "Remove a book from the user's favorites list.",
         "parameters": [
           {
@@ -880,6 +930,11 @@
       "post": {
         "tags": ["Reviews"],
         "summary": "Create a new review",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -911,6 +966,11 @@
       "get": {
         "tags": ["Reviews"],
         "summary": "Get reviews by user ID",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "userId",
@@ -954,6 +1014,11 @@
       "patch": {
         "tags": ["Reviews"],
         "summary": "Update a review",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "reviewId",
@@ -999,6 +1064,11 @@
       "delete": {
         "tags": ["Reviews"],
         "summary": "Delete a review",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "reviewId",
@@ -1265,6 +1335,11 @@
       "get": {
         "tags": ["Orders"],
         "summary": "Get orders by user ID",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "userId",
@@ -1331,6 +1406,51 @@
           },
           "500": {
             "description": "Server error"
+          }
+        }
+      }
+    },
+    "/newsletter/add": {
+      "post": {
+        "summary": "Add a new email to the newsletter",
+        "description": "Create a new newsletter subscription by providing an email address.",
+        "tags": ["Newsletter"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Newsletter"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Subscription created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Newsletter"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Please provide an email."
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
