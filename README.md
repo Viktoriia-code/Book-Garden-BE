@@ -117,10 +117,12 @@ You can view the API documentation in two ways:
     - **GET /cart:** Get user's cart
     - **POST /cart/add:** Add a book to cart
     - **POST /cart/reduce:** Reduce book quantity
-    - **POST /cart/remove:** Remove a book from cart
+    - **DELETE /cart/remove:** Remove a book from cart
 - **Orders**
     - **GET /orders/{userId}:** Get orders by user ID
     - **POST /orders:** Create a new order
+- **Newsletter**
+    - **POST /newsletter/add:** Create a new newsletter
 
 ### Authentication
 Some endpoints require authentication. Ensure you provide a valid Bearer token in the Authorization header when making requests to protected routes.
