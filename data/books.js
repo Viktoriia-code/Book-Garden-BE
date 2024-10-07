@@ -9,7 +9,9 @@ const books = [
     "pages": 1225,
     "language": "Russian",
     "image": "/images/war-and-peace.jpg",
-    "price": 30.50
+    "price": 30.50,
+    "binding": "Hardcover",
+    "publisher": "Classic Literature Press"
   },
   {
     "title": "To Kill a Mockingbird",
@@ -21,7 +23,9 @@ const books = [
     "pages": 281,
     "language": "English",
     "image": "/images/to-kill-a-mockingbird.jpg",
-    "price": 10
+    "price": 10,
+    "binding": "Paperback",
+    "publisher": "Fictional Publishing House"
   },
   {
     "title": "Pride and Prejudice",
@@ -33,7 +37,9 @@ const books = [
     "pages": 432,
     "language": "English",
     "image": "/images/pride-and-prejudice.jpg",
-    "price": 8.50
+    "price": 8.50,
+    "binding": "Paperback",
+    "publisher": "Vintage Books"
   },
   {
     "title": "Moby-Dick",
@@ -45,7 +51,9 @@ const books = [
     "pages": 635,
     "language": "English",
     "image": "/images/moby-dick.jpg",
-    "price": 25
+    "price": 25,
+    "binding": "Hardcover",
+    "publisher": "Classic Reads Co."
   },
   {
     "title": "The Great Gatsby",
@@ -57,7 +65,9 @@ const books = [
     "pages": 180,
     "language": "English",
     "image": "/images/the-great-gatsby.jpg",
-    "price": 15.80
+    "price": 15.80,
+    "binding": "Paperback",
+    "publisher": "Whale Tales Publishing"
   },
   {
     "title": "The Catcher in the Rye",
@@ -69,7 +79,9 @@ const books = [
     "pages": 214,
     "language": "English",
     "image": "/images/the-catcher-in-the-rye.jpg",
-    "price": 5.50
+    "price": 5.50,
+    "binding": "Paperback",
+    "publisher": "Dreamscape Books"
   },
   {
     "title": "1984",
@@ -81,7 +93,9 @@ const books = [
     "pages": 328,
     "language": "English",
     "image": "/images/1984.jpg",
-    "price": 6.99
+    "price": 6.99,
+    "binding": "Paperback",
+    "publisher": "Big Brother Books"
   },
   {
     "title": "Brave New World",
@@ -93,7 +107,9 @@ const books = [
     "pages": 268,
     "language": "English",
     "image": "/images/brave-new-world.jpg",
-    "price": 8.50
+    "price": 8.50,
+    "binding": "Paperback",
+    "publisher": "Future Books Inc."
   },
   {
     "title": "Crime and Punishment",
@@ -105,7 +121,9 @@ const books = [
     "pages": 430,
     "language": "English",
     "image": "/images/crime-and-punishment.jpg",
-    "price": 7.49
+    "price": 7.49,
+    "binding": "Paperback",
+    "publisher": "Regency Books Publishing"
   },
   {
     "title": "The Odyssey",
@@ -117,7 +135,9 @@ const books = [
     "pages": 541,
     "language": "English",
     "image": "/images/the-odyssey.jpg",
-    "price": 8.99
+    "price": 8.99,
+    "binding": "Paperback",
+    "publisher": "Regency Books Publishing"
   },
   {
     "title": "Wuthering Heights",
@@ -129,7 +149,9 @@ const books = [
     "pages": 416,
     "language": "English",
     "image": "/images/wuthering-heights.jpg",
-    "price": 5.99
+    "price": 5.99,
+    "binding": "Paperback",
+    "publisher": "Classic Literature Press"
   },
   {
     "title": "Jane Eyre",
@@ -141,7 +163,9 @@ const books = [
     "pages": 532,
     "language": "English",
     "image": "/images/jane-eyre.jpg",
-    "price": 6.99
+    "price": 6.99,
+    "binding": "Paperback",
+    "publisher": "Vintage Books"
   },
   {
     "title": "Catch-22",
@@ -153,7 +177,9 @@ const books = [
     "pages": 453,
     "language": "English",
     "image": "/images/catch-22.jpg",
-    "price": 8.99
+    "price": 8.99,
+    "binding": "Paperback",
+    "publisher": "Vintage Books"
   },
   {
     "title": "Frankenstein",
@@ -165,7 +191,9 @@ const books = [
     "pages": 166,
     "language": "English",
     "image": "/images/frankenstein.jpeg",
-    "price": 4.50
+    "price": 4.50,
+    "binding": "Paperback",
+    "publisher": "Regency Books Publishing"
   },
   {
     "title": "The Hobbit",
@@ -177,7 +205,9 @@ const books = [
     "pages": 310,
     "language": "English",
     "image": "/images/the-hobbit.jpg",
-    "price": 8.50
+    "price": 8.50,
+    "binding": "Paperback",
+    "publisher": "Fantasy Books Inc."
   },
   {
     "title": "Fahrenheit 451",
@@ -189,7 +219,9 @@ const books = [
     "pages": 194,
     "language": "English",
     "image": "/images/fahrenheit-451.jpg",
-    "price": 7.49
+    "price": 7.99,
+    "binding": "Paperback",
+    "publisher": "Future Books Inc."
   },
   {
     "title": "The Picture of Dorian Gray",
@@ -201,7 +233,9 @@ const books = [
     "pages": 254,
     "language": "English",
     "image": "/images/the-picture-of-dorian-gray.jpg",
-    "price": 6.50
+    "price": 6.50,
+    "binding": "Paperback",
+    "publisher": "Vintage Books"
   },
   {
     "title": "Dracula",
@@ -213,7 +247,9 @@ const books = [
     "pages": 418,
     "language": "English",
     "image": "/images/dracula.jpeg",
-    "price": 5.99
+    "price": 5.99,
+    "binding": "Paperback",
+    "publisher": "Classic Literature Press"
   },
   {
     "title": "The Brothers Karamazov",
@@ -225,7 +261,9 @@ const books = [
     "pages": 796,
     "language": "English",
     "image": "/images/the-brothers-karamazov.jpg",
-    "price": 9.99
+    "price": 9.99,
+    "binding": "Paperback",
+    "publisher": "Classic Literature Publishing"
   },
   {
     "title": "The Divine Comedy",
@@ -237,7 +275,9 @@ const books = [
     "pages": 798,
     "language": "English",
     "image": "/images/the-divine-comedy.jpeg",
-    "price": 11.99
+    "price": 11.99,
+    "binding": "Hardcover",
+    "publisher": "Medieval Classics Publishing"
   },
   {
     "title": "The Scarlet Letter",
@@ -249,7 +289,9 @@ const books = [
     "pages": 272,
     "language": "English",
     "image": "/images/the-scarlet-letter.jpeg",
-    "price": 5.75
+    "price": 5.75,
+    "binding": "Paperback",
+    "publisher": "Vintage Books"
   },
   {
     "title": "The Little Mermaid",
@@ -261,7 +303,9 @@ const books = [
     "pages": 32,
     "language": "English",
     "image": "/images/the-little-mermaid.jpg",
-    "price": 6.99
+    "price": 6.99,
+    "binding": "Hardcover",
+    "publisher": "Fairy Tale Books"
   },
   {
     "title": "The Ugly Duckling",
@@ -273,7 +317,9 @@ const books = [
     "pages": 36,
     "language": "English",
     "image": "/images/the-ugly-duckling.jpg",
-    "price": 5.99
+    "price": 5.99,
+    "binding": "Paperback",
+    "publisher": "Fairy Tale Books"
   },
   {
     "title": "Cinderella",
@@ -285,7 +331,9 @@ const books = [
     "pages": 40,
     "language": "English",
     "image": "/images/cinderella.jpg",
-    "price": 7.99
+    "price": 7.99,
+    "binding": "Hardcover",
+    "publisher": "Fairy Tale Books"
   },
   {
     "title": "Sleeping Beauty",
@@ -297,7 +345,9 @@ const books = [
     "pages": 48,
     "language": "English",
     "image": "/images/sleeping-beauty.jpg",
-    "price": 6.99
+    "price": 6.99,
+    "binding": "Hardcover",
+    "publisher": "Fairy Tale Books"
   },
   {
     "title": "Karlsson on the Roof",
@@ -309,7 +359,9 @@ const books = [
     "pages": 160,
     "language": "English",
     "image": "/images/karlsson-on-the-roof.jpg",
-    "price": 8.99
+    "price": 8.99,
+    "binding": "Paperback",
+    "publisher": "Fairy Tale Books"
   },
   {
     "title": "Pippi Longstocking",
@@ -321,7 +373,9 @@ const books = [
     "pages": 160,
     "language": "English",
     "image": "/images/pippi-longstocking.jpg",
-    "price": 7.99
+    "price": 7.99,
+    "binding": "Paperback",
+    "publisher": "Fairy Tale Books"
   },
   {
     "title": "The Adventures of Pinocchio",
@@ -333,7 +387,9 @@ const books = [
     "pages": 208,
     "language": "English",
     "image": "/images/pinocchio.jpg",
-    "price": 7.99
+    "price": 7.99,
+    "binding": "Paperback",
+    "publisher": "Fairy Tale Books"
   },
   {
     "title": "The Jungle Book",
@@ -345,7 +401,9 @@ const books = [
     "pages": 240,
     "language": "English",
     "image": "/images/jungle-book.jpg",
-    "price": 7.99
+    "price": 7.99,
+    "binding": "Paperback",
+    "publisher": "Fairy Tale Books"
   },
   {
     "title": "The Magic of Thinking Big",
@@ -357,7 +415,9 @@ const books = [
     "pages": 368,
     "language": "English",
     "image": "/images/magic-of-thinking-big.jpg",
-    "price": 16.99
+    "price": 16.99,
+    "binding": "Paperback",
+    "publisher": "Personal Growth Publishing"
   },
   {
     "title": "Oxford English Dictionary",
@@ -369,7 +429,9 @@ const books = [
     "pages": 2200,
     "language": "English",
     "image": "/images/oxford-english-dictionary.jpg",
-    "price": 35.99
+    "price": 35.99,
+    "binding": "Hardcover",
+    "publisher": "Oxford University Press"
   },
   {
     "title": "How to Read a Book",
@@ -381,7 +443,9 @@ const books = [
     "pages": 426,
     "language": "English",
     "image": "/images/how-to-read-a-book.jpg",
-    "price": 12.99
+    "price": 12.99,
+    "binding": "Paperback",
+    "publisher": "Reading Essentials Publishing"
   },
   {
     "title": "The Art of Public Speaking",
@@ -393,7 +457,9 @@ const books = [
     "pages": 720,
     "language": "English",
     "image": "/images/art-of-public-speaking.jpg",
-    "price": 19.99
+    "price": 19.99,
+    "binding": "Hardcover",
+    "publisher": "Public Speaking Publishing"
   }
 ];
 

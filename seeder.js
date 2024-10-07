@@ -5,6 +5,8 @@ const reviews = require('./data/reviews.js');
 const User = require('./models/userModel.js');
 const Book = require('./models/bookModel.js');
 const Review = require('./models/reviewModel.js');
+const Cart = require('./models/cartModel.js');
+const Order = require('./models/orderModel.js');
 const connectDB = require("./config/db");
 
 connectDB();
@@ -14,6 +16,8 @@ const importData = async () => {
     await User.deleteMany();
     await Book.deleteMany();
     await Review.deleteMany();
+    await Cart.deleteMany();
+    await Order.deleteMany();
 
     const createdUsers = await User.insertMany(users);
     const createdBooks = await Book.insertMany(books);
@@ -51,6 +55,8 @@ const destroyData = async () => {
     await Book.deleteMany();
     await Review.deleteMany();
     await User.deleteMany();
+    await Cart.deleteMany();
+    await Order.deleteMany();
 
     console.log('Data Destroyed!'.red.inverse);
     process.exit();
