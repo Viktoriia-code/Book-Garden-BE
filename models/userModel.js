@@ -1,8 +1,10 @@
+require('dotenv').config();
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 
 const Schema = mongoose.Schema;
+const saltRounds = parseInt(process.env.SALT_ROUNDS) || 10;
 
 const userSchema = new Schema(
   {
@@ -47,7 +49,7 @@ userSchema.statics.register = async function(firstName, lastName, username, emai
     throw Error('Email already in use')
   };
 
-  const salt = await bcrypt.genSalt(10);
+  const salt = await bcrypt.genSalt(saltRounds);
   const hash = await bcrypt.hash(password, salt);
 
   const user = await this.create({ 
