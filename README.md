@@ -19,6 +19,8 @@ This app was developed as part of "Web development" course at Metropolia UAS.
 - seeder.js for populating the database with initial data
 - validator module for checking emails and passwords
 - swagger for API documentation
+- dotenv for managing environment variables from a .env file into process.env
+- cross-env for setting environment variables across different environments
 
 ## 🔧 How to run locally:
 
