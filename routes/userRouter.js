@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const {
-  getAllUsers,
   getUserProfile,
   registerUser,
   loginUser,
@@ -12,12 +11,8 @@ const {
   addFavoriteBook,
   removeFavoriteBook
 } = require('../controllers/userControllers');
-const User = require('../models/userModel');
 const requireAuth = require('../middleware/requireAuth');
 
-
-// GET /users
-router.get('/', getAllUsers);
 
 // POST /users/register
 router.post('/register', registerUser);

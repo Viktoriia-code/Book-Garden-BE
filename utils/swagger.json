@@ -17,6 +17,7 @@
       "User": {
         "type": "object",
         "properties": {
+          "_id": { "type": "string" },
           "firstName": { "type": "string" },
           "lastName": { "type": "string" },
           "username": { "type": "string" },
@@ -24,13 +25,13 @@
           "favorites": {
             "type": "array",
             "items": { "$ref": "#/components/schemas/Book" }
-          },
-          "isAdmin": { "type": "boolean" }
+          }
         }
       },
       "Book": {
         "type": "object",
         "properties": {
+          "_id": { "type": "string" },
           "title": { "type": "string" },
           "author": { "type": "string" },
           "genre": { "type": "string" },
@@ -239,29 +240,6 @@
     }
   ],
   "paths": {
-    "/users": {
-      "get": {
-        "tags": ["Users"],
-        "summary": "Get all users",
-        "description": "Retrieve a list of all users.",
-        "responses": {
-          "200": {
-            "description": "A list of users.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "$ref": "#/components/schemas/User" }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Failed to retrieve users."
-          }
-        }
-      }
-    },
     "/users/register": {
       "post": {
         "tags": ["Users"],
@@ -591,36 +569,6 @@
             "description": "Failed to retrieve books"
           }
         }
-      },
-      "post": {
-        "tags": ["Books"],
-        "summary": "Create a new book",
-        "operationId": "createBook",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Book"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Book created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Book"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Failed to create book"
-          }
-        }
       }
     },
     "/books/new": {
@@ -736,75 +684,6 @@
           },
           "500": {
             "description": "Failed to retrieve book"
-          }
-        }
-      },
-      "patch": {
-        "tags": ["Books"],
-        "summary": "Update a book by its ID",
-        "operationId": "updateBook",
-        "parameters": [
-          {
-            "name": "bookId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Book"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Book updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Book"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Book not found"
-          },
-          "500": {
-            "description": "Failed to update book"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Books"],
-        "summary": "Delete a book by its ID",
-        "operationId": "deleteBook",
-        "parameters": [
-          {
-            "name": "bookId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Book deleted successfully"
-          },
-          "404": {
-            "description": "Book not found"
-          },
-          "500": {
-            "description": "Failed to delete book"
           }
         }
       }
