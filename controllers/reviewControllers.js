@@ -1,4 +1,5 @@
 const Review = require("../models/reviewModel");
+const Book = require("../models/bookModel");
 const mongoose = require("mongoose");
 
 // GET /reviews
@@ -59,16 +60,29 @@ const updateReview = async (req, res) => {
   }
 
   try {
+    const existingReview = await Review.findById(reviewId);
+    if (!existingReview) {
+      return res.status(404).json({ message: "Review not found" });
+    }
+
     const updatedReview = await Review.findOneAndUpdate(
       { _id: reviewId },
       { $set: req.body },
       { new: true, runValidators: true }
     );
-    if (updatedReview) {
-      res.status(200).json(updatedReview);
-    } else {
-      res.status(404).json({ message: "Review not found" });
+
+    const book = await Book.findById(existingReview.book);
+    if (book) {
+      const reviews = await Review.find({ book: book._id });
+
+      const totalSum = reviews.reduce((acc, currReview) => acc + currReview.rating, 0);
+      const newAverageRating = reviews.length > 0 ? (totalSum / reviews.length).toFixed(1) : '0.0';
+
+      book.rating = parseFloat(newAverageRating);
+      await book.save();
     }
+
+    res.status(200).json(updatedReview);
   } catch (error) {
     res.status(500).json({ message: "Failed to update review" });
   }
@@ -84,12 +98,26 @@ const deleteReview = async (req, res) => {
 
   try {
     const deletedReview = await Review.findOneAndDelete({ _id: reviewId });
-    if (deletedReview) {
-      res.status(200).json({ message: "Review deleted successfully" });
-    } else {
-      res.status(404).json({ message: "Review not found" });
+
+    if (!deletedReview) {
+      return res.status(404).json({ message: "Review not found" });
     }
+
+    const book = await Book.findById(deletedReview.book);
+    if (book) {
+      const reviews = await Review.find({ book: deletedReview.book });
+
+      const totalSum = reviews.reduce((acc, currReview) => acc + currReview.rating, 0);
+      const newAverageRating = reviews.length > 0 ? (totalSum / reviews.length).toFixed(1) : '0.0';
+
+      book.rating = parseFloat(newAverageRating);
+      await book.save();
+    }
+
+    res.status(200).json({ message: "Review deleted successfully" });
+
   } catch (error) {
+    console.error('Error deleting review:', error.message);
     res.status(500).json({ message: "Failed to delete review" });
   }
 };

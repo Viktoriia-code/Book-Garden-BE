@@ -63,23 +63,4 @@ reviewSchema.pre('save', async function (next) {
   next();
 });
 
-// Post-remove middleware to update the book's average rating when a review is deleted
-reviewSchema.post('remove', async function (review) {
-  const book = await mongoose.model('Book').findById(review.book);
-  if (!book) {
-    return next(new Error('Book not found'));
-  }
-
-  // Get all remaining reviews for this book
-  const reviews = await mongoose.model('Review').find({ book: review.book });
-
-  // Calculate the new average rating
-  const totalSum = reviews.reduce((acc, currReview) => acc + currReview.rating, 0);
-  const newAverageRating = reviews.length > 0 ? (totalSum / reviews.length).toFixed(1) : '0.0';
-
-  // Update the book's rating
-  book.rating = parseFloat(newAverageRating);
-  await book.save();
-});
-
 module.exports = mongoose.model("Review", reviewSchema);
