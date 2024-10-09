@@ -1,110 +1,160 @@
-const mongoose = require("mongoose");
-const supertest = require("supertest");
-const app = require("../app"); // Your Express app
-const api = supertest(app);
-const User = require("../models/userModel");
+const request = require('supertest');
+const mongoose = require('mongoose');
+const app = require('../app'); // Assuming your Express app is exported from app.js
+const User = require('../models/userModel'); // Your User model
 
-const users = [
-  {
-    firstName: "Mason",
-    lastName: "Kendrick",
-    username: "kendrick87",
-    email: "mason.kendrick87@fakemail.com",
-    password: "M@sonStrongPass87!"
-  },
-  {
-    firstName: "Elara",
-    lastName: "Rowan",
-    username: "rowan23",
-    email: "elara.rowan23@fakemail.com",
-    password: "E1araSecurePass23#"
-  }
-];
+let token;
+let userId;
+let testUser;
+const createdUserIds = []; // Array to keep track of created user IDs
 
-let token = null;
-let userId = null;
+describe('User API', () => {
+  
+  // Register a user before running the tests
+  beforeAll(async () => {
+    testUser = {
+      firstName: 'John',
+      lastName: 'Doe',
+      username: 'johndoe',
+      email: 'johndoe@example.com',
+      password: 'Str0ngP@ssword'
+    };
 
-beforeAll(async () => {
-  await User.deleteMany({});
-  const result = await api.post("/api/users/register").send({
-    firstName: "Luna",
-    lastName: "Caldwell",
-    username: "luna.caldwel",
-    email: "luna.caldwell91@fakemail.com",
-    password: "Lun@MoonPass91!"
-  });
-  token = result.body.token;
-
-  const registeredUser = await User.findOne({ email: "luna.caldwell91@fakemail.com" });
-  userId = registeredUser._id.toString();
-});
-
-describe("Given there are initially some users saved", () => {
-  beforeEach(async () => {
-    await User.deleteMany({ username: { $ne: "luna.caldwel" } });
+    const registerResponse = await request(app)
+      .post('/api/users/register')
+      .send(testUser);
     
-    await api.post("/api/users/register").send(users[0]);
-    await api.post("/api/users/register").send(users[1]);
+    token = registerResponse.body.token;
+    userId = registerResponse.body.userId;
+    createdUserIds.push(userId); // Track the created user ID
   });
 
-  it("should return the user's profile when GET /users/:userId is called with a valid token", async () => {
-    await api
-      .get(`/api/users/${userId}`)
-      .set("Authorization", "bearer " + token)  
-      .expect(200)
-      .expect("Content-Type", /application\/json/)
-      .expect(res => {
-        // Additional checks to verify user details
-        expect(res.body.firstName).toBe("Luna");
-        expect(res.body.lastName).toBe("Caldwell");
-        expect(res.body.username).toBe("luna.caldwel");
-        expect(res.body.email).toBe("luna.caldwell91@fakemail.com");
-      });
-  });
-
-  it("should create one user when POST /api/users/register is called", async () => {
+  // Test POST /users/register
+  it('should register a new user', async () => {
     const newUser = {
-      firstName: "Avery",
-      lastName: "Montgomery",
-      username: "montgomery84",
-      email: "avery.montgomery84@fakemail.com",
-      password: "Av3rySkyPass84!"
+      firstName: 'Jane',
+      lastName: 'Doe',
+      username: 'janedoe',
+      email: 'janedoe@example.com',
+      password: 'Str0ngP@ssword'
     };
-    await api
-      .post("/api/users/register")  
-      .send(newUser)
-      .expect(200);
+    
+    const response = await request(app)
+      .post('/api/users/register')
+      .send(newUser);
+    
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('token');
+    expect(response.body).toHaveProperty('userId');
+
+    createdUserIds.push(response.body.userId); // Track the created user ID
   });
 
-  it("should login a user and return a token when POST /api/users/login is called", async () => {
-    const loginUser = {
-      email: "mason.kendrick87@fakemail.com",
-      password: "M@sonStrongPass87!",
-    };
+  // Test POST /users/login
+  it('should log in an existing user', async () => {
+    const response = await request(app)
+      .post('/api/users/login')
+      .send({ email: testUser.email, password: testUser.password });
+    
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('token');
+    expect(response.body).toHaveProperty('userId');
+  });
 
-    const response = await api
-      .post("/api/users/login") 
-      .send(loginUser)
-      .expect(200)
-      .expect("Content-Type", /application\/json/);
+  // Test GET /users/:userId
+  it('should get the user profile', async () => {
+    const response = await request(app)
+      .get(`/api/users/${userId}`)
+      .set('Authorization', `Bearer ${token}`);
+    
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('_id', userId);
+  });
 
-    expect(response.body.token).toBeDefined();
+  // Test PATCH /users/:userId
+  it('should update the user profile', async () => {
+    const updatedData = { firstName: 'Johnathan' };
 
-    const loggedInUser = await User.findOne({ email: loginUser.email });
+    const response = await request(app)
+      .patch(`/api/users/${userId}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(updatedData);
+    
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('firstName', 'Johnathan');
+  });
 
-    await api
-      .get(`/api/users/${loggedInUser._id.toString()}`)
-      .set("Authorization", "bearer " + response.body.token)  
-      .expect(200)
-      .expect("Content-Type", /application\/json/)
-      .expect(res => {
-        // Check that the returned user data matches the logged-in user
-        expect(res.body.email).toBe("mason.kendrick87@fakemail.com");
-        expect(res.body.username).toBe("kendrick87");
+  // Test PATCH /users/:userId/password
+  it('should update the user password', async () => {
+    const response = await request(app)
+      .patch(`/api/users/${userId}/password`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        currentPassword: testUser.password,
+        newPassword: 'N3wStr0ngP@ssword'
       });
+    
+    expect(response.statusCode).toBe(200);
+    expect(response.body.message).toBe('Password updated successfully');
   });
-});
 
-afterAll(() => {
-  mongoose.connection.close();  
+  // Test GET /users/favorites/:userId
+  it('should get the user favorites', async () => {
+    const response = await request(app)
+      .get(`/api/users/favorites/${userId}`)
+      .set('Authorization', `Bearer ${token}`);
+    
+    expect(response.statusCode).toBe(200);
+    expect(Array.isArray(response.body)).toBe(true);
+  });
+
+  // Test POST /users/favorites
+  it('should add a book to user favorites', async () => {
+    const bookId = new mongoose.Types.ObjectId(); // Mock book ID
+
+    const response = await request(app)
+      .post(`/api/users/favorites`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ userId, bookId });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.message).toBe('Book added to favorites');
+  });
+
+  // Test DELETE /users/favorites/:userId/:bookId
+  it('should remove a book from user favorites', async () => {
+    const bookId = new mongoose.Types.ObjectId(); // Mock book ID
+
+    // First, add the book to favorites
+    await request(app)
+      .post(`/api/users/favorites`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ userId, bookId });
+
+    // Then, remove it
+    const response = await request(app)
+      .delete(`/api/users/favorites/${userId}/${bookId}`)
+      .set('Authorization', `Bearer ${token}`);
+    
+    expect(response.statusCode).toBe(200);
+    expect(response.body.message).toBe('Book removed from favorites');
+  });
+
+  // Test DELETE /users/:userId
+  it('should delete the user', async () => {
+    const response = await request(app)
+      .delete(`/api/users/${userId}`)
+      .set('Authorization', `Bearer ${token}`);
+    
+    expect(response.statusCode).toBe(200);
+    expect(response.body.message).toBe('User deleted successfully');
+  });
+
+  // Cleanup - delete only created users
+  afterAll(async () => {
+    for (const id of createdUserIds) {
+      await User.findByIdAndDelete(id);
+    }
+    mongoose.connection.close(); // Close the connection to the database
+  });
 });
