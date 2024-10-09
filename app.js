@@ -22,6 +22,7 @@ const requireAuth = require('./middleware/requireAuth');
 
 // express app
 const app = express();
+app.use(express.static('build'));
 
 connectDB();
 
@@ -35,6 +36,7 @@ app.get('/api/swagger.json', (req, res) => {
 
 // middleware for cross-origin resource sharing
 app.use(cors());
+
 
 // middleware to parse JSON
 app.use(express.json());

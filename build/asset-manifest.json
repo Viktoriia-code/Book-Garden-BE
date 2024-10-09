@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a5ccdb6d.css",
+    "main.js": "/static/js/main.8eb9833d.js",
+    "static/js/453.a6b3d885.chunk.js": "/static/js/453.a6b3d885.chunk.js",
+    "static/media/genres-1.png": "/static/media/genres-1.1057928c30563444807d.png",
+    "static/media/genres-2.png": "/static/media/genres-2.f1beeb423aeb68543c0f.png",
+    "static/media/genres-3.png": "/static/media/genres-3.0b77f5d20d958d1cfe88.png",
+    "static/media/hero.jpg": "/static/media/hero.d2cd04705cb11064217f.jpg",
+    "static/media/account.png": "/static/media/account.0d3658787ad105d9d7a5.png",
+    "static/media/genres.png": "/static/media/genres.b77e519dc282d9549696.png",
+    "static/media/logo.svg": "/static/media/logo.048c0b5125f0e71fec9fcea4cc303e1d.svg",
+    "static/media/customer1.png": "/static/media/customer1.cf95554f51c4e022c1a0.png",
+    "static/media/subscriptions-section.png": "/static/media/subscriptions-section.911e07887538f70f8c0a.png",
+    "static/media/logoSmall.svg": "/static/media/logoSmall.90317a6ed4bccaff32a460aea7f48dcf.svg",
+    "static/media/clover_tilted.svg": "/static/media/clover_tilted.d142bc10ae4395a76456f0e3d449b891.svg",
+    "static/media/noCover.svg": "/static/media/noCover.d636dcc624bff7d5498ae2140fe51a02.svg",
+    "index.html": "/index.html",
+    "main.a5ccdb6d.css.map": "/static/css/main.a5ccdb6d.css.map",
+    "main.8eb9833d.js.map": "/static/js/main.8eb9833d.js.map",
+    "453.a6b3d885.chunk.js.map": "/static/js/453.a6b3d885.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a5ccdb6d.css",
+    "static/js/main.8eb9833d.js"
+  ]
+}
