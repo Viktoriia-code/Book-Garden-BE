@@ -21,6 +21,8 @@ This app was developed as part of "Web development" course at Metropolia UAS.
 - swagger for API documentation
 - dotenv for managing environment variables from a .env file into process.env
 - cross-env for setting environment variables across different environments
+- swagger for API documentation
+- Jest and Supertest for testing API endpoints
 
 ## 🔧 How to run locally:
 
