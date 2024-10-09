@@ -43,9 +43,6 @@ const createOrder = async (req, res) => {
       return res.status(400).json({ message: "Cart is empty" });
     }
 
-    console.log(cart.products);
-    
-
     // Extract data from the cart
     const totalPrice = cart.products.reduce((total, product) => total + product.book.price * product.quantity, 0);
 
