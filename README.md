@@ -126,8 +126,14 @@ You can view the API documentation in two ways:
 - **Newsletter**
     - **POST /newsletter/add:** Create a new newsletter
 
+![Sprint3-11_page-0001](https://github.com/user-attachments/assets/c3f77fbc-01f2-42e0-8d9a-46a391a14229)
+
 ### Authentication
 Some endpoints require authentication. Ensure you provide a valid Bearer token in the Authorization header when making requests to protected routes.
 ```
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
+
+## Database Models
+![Sprint3-12_page-0001](https://github.com/user-attachments/assets/5fc4fddb-74cf-40f4-b684-e8d632059c34)
+
