@@ -8,9 +8,14 @@
 
 This app was developed as part of "Web development" course at Metropolia UAS.
 
+[View the app on Render](https://book-garden-be.onrender.com/)
+
 📅 August - October, 2024
 
-## :computer: Technical stack overview
+![image](https://github.com/user-attachments/assets/8f8ddf80-56bc-4d62-9754-df8b2ead45df)
+![image](https://github.com/user-attachments/assets/3d9e0f0e-20f6-496d-97cd-2a838c3d18ca)
+
+## :computer: Technical stack
 - Node.js and Express
 - MongoDB and mongoose
 - Cors middleware for cross-origin resource sharing
@@ -23,6 +28,7 @@ This app was developed as part of "Web development" course at Metropolia UAS.
 - cross-env for setting environment variables across different environments
 - swagger for API documentation
 - Jest and Supertest for testing API endpoints
+- Render for deployment
 
 ## 🔧 How to run locally:
 
@@ -53,6 +59,8 @@ npm run data:import
 ```
 npm run dev
 ```
+
+5) Run the Frontend using the instructions from Book Garden's [Frontend Repository](https://github.com/santten/BookGardenFE)
 
 ## :chart_with_upwards_trend: Database Seeding Commands:
 
@@ -134,6 +142,23 @@ Some endpoints require authentication. Ensure you provide a valid Bearer token i
 Authorization: Bearer YOUR_JWT_TOKEN
 ```
 
+## Database
+This application uses MongoDB as the database. Depending on the environment, the application connects to different MongoDB instances. Below are the connection details for each environment:
+
+### Development and Testing Environments
+- **Connection URI:** `mongodb://localhost:27017/book-garden`
+- Both the development and testing databases are hosted locally.
+
+### Production Environment
+- **Connection URI:** (This is retrieved from environment variables, e.g., `process.env.MONGO_URI_PROD`)
+- The production database is hosted on MongoDB Cloud.
+
+### Configuration
+- The MongoDB connection URI for each environment is specified in the `.env` file as follows:
+  ```plaintext
+  NODE_ENV=development
+  MONGO_URI_DEV=mongodb://localhost:27017/book-garden
+  MONGO_URI_TEST=mongodb://localhost:27017/book-garden  # Same as development
+  MONGO_URI_PROD=your_production_mongo_uri_here
 ## Database Models
 ![Sprint3-12_page-0001](https://github.com/user-attachments/assets/5fc4fddb-74cf-40f4-b684-e8d632059c34)
-
