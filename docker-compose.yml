@@ -1,0 +1,28 @@
+services:
+  node-dev-env:
+    build: .
+    command: npm run dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    container_name: node-dev-env
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URL: mongodb://mongo:27017/book-garden
+      NODE_ENV: development
+      MONGO_URI_DEV: mongodb://mongo:27017/book-garden
+      MONGO_URI_TEST: mongodb://mongo:27017/book-garden
+  mongo:
+    image: mongo:7.0
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    container_name: mongo
+
+volumes:
+  node_modules:
+  mongo_data:
